@@ -7,6 +7,7 @@ import AdminPage from './components/AdminPage';
 import Cadastro from './components/Cadastro';
 import Login from './components/Login';
 import Passagens from './components/Passagens';
+import './styles/styles.css'
 
 
 import{BrowserRouter as Router,Routes,Route} from 'react-router-dom'
