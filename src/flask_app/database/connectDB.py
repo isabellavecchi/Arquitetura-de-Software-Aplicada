@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select, update, func, null, insert
-from models import TbEstudante, Base
+from models import Base, User, Airport, Airplane
 import logging
 
 # print(DATABASE_URL)
