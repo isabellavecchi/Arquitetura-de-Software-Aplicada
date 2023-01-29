@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 export const clientss = [
   {id:"1",usuario:"Joao", email:"joao@mail.com", viagens:"São Paulo -> Uberlândia no dia 22/07/2023"},
   {id:"2",usuario:"Maria", email:"maria@bol.com", viagens:"Uberlândia -> São Paulo 24/07/2023"},
-  {id:"3",usuario:"Isabela", email:"isabela@yahoo.com", viagens:"São Paulo -> Uberlândia 21/07/2023"},
+  {id:"3",usuario:"Isabella", email:"isabella@yahoo.com", viagens:"São Paulo -> Uberlândia 21/07/2023"},
   {id:"4",usuario:"Augusto", email:"augusto@hotmail.com", viagens:"São Paulo -> Uberlândia 21/07/2023"}
 ]
 
