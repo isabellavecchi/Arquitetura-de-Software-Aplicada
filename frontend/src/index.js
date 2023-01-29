@@ -3,10 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  ReactDOM  from 'react-dom'
 import Menu from './components/Menu';
 import Home from './components/Home';
-import AdminPage from './components/AdminPage';
+import AdminPassports from './components/AdminPassports';
 import Cadastro from './components/Cadastro';
 import Login from './components/Login';
 import Passagens from './components/Passagens';
+import AdminClients from './components/AdminClients'
+import AdminAirports from './components/AdminAirports'
 import './styles/styles.css'
 
 
@@ -26,8 +28,9 @@ const App=()=>{
             <Route path="/login" element={<Login />} />
             <Route path="/passagens" element={<Passagens />} />
             <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/admin" element={<AdminPage />} />
-
+            <Route path="/adminP" element={<AdminPassports />} />
+            <Route path="/adminC" element={<AdminClients />} />
+            <Route path="/adminA" element={<AdminAirports />} />
             </Routes>
 
         </div>
