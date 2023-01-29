@@ -6,7 +6,7 @@ const Home=()=>{
 return(
     <div className="container d-flex align-items-center flex-column text-center mt-5">
        <h3>
-       Seja Bem vindo!
+       Seja Bem vindo a AviaTur!
        </h3> 
        <h6>Deseja iniciar a sessão?</h6>
        <Button style={{ width: "100px"}} as={NavLink} to="/login" className='' variant="success">Entrar</Button>{' '}
