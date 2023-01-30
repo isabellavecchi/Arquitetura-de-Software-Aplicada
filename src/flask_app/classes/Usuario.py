@@ -31,7 +31,7 @@ class Usuario:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Usuario: %s\nNome: %s\nEmail: %s\n' % (self.getIdUsuario(), self.getNome(), self.getEmail())
+        return 'Usuario: %s\nNome: %s\nEmail: %s\n' % (self.getId(), self.getNome(), self.getEmail())
     
     def printa(self):
         print(self.__repr__())
@@ -52,10 +52,10 @@ class Usuario:
 
     # GETTERS AND SETTERS
 
-    def setIdUsuario(self,idUsuario):
+    def setId(self,idUsuario):
         self.idUsuario = idUsuario
     
-    def getIdUsuario(self):
+    def getId(self):
         return self.idUsuario
 
     def setNome(self,nome):

@@ -31,7 +31,7 @@ class Aviao:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Aviao: %s\nQtAssentosEconomicos: %s\nQtAssentosExecutivos: %s\nQtAssentosTotais: %s\n' % (self.getIdAviao(), self.getQtAssentosEconomicos(), self.getQtAssentosExecutivos(), self.getQtAssentosTotais())
+        return 'Aviao: %s\nQtAssentosEconomicos: %s\nQtAssentosExecutivos: %s\nQtAssentosTotais: %s\n' % (self.getId(), self.getQtAssentosEconomicos(), self.getQtAssentosExecutivos(), self.getQtAssentosTotais())
     
     def printa(self):
         print(self.__repr__())
@@ -46,10 +46,10 @@ class Aviao:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdAviao(self,idAviao):
+    def setId(self,idAviao):
         self.idAviao = idAviao
     
-    def getIdAviao(self):
+    def getId(self):
         return self.idAviao
 
     def setQtAssentosEconomicos(self,qtAssentosEconomicos):
@@ -63,9 +63,6 @@ class Aviao:
     
     def getQtAssentosExecutivos(self):
         return self.qtAssentosExecutivos
-            
-    def setQtAssentosTotais(self, qtTotalAssentos):
-        self.qtTotalAssentos = qtTotalAssentos
     
     def getQtAssentosTotais(self):
         return self.qtTotalAssentos

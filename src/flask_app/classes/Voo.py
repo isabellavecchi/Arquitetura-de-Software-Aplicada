@@ -45,7 +45,7 @@ class Voo:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Voo: %s\nidAviao: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\n' % (self.getIdVoo(),self.getIdAviao(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida())
+        return 'Voo: %s\nidAviao: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\n' % (self.getId(),self.getIdAviao(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida())
     
     def printa(self):
         print(self.__repr__())
@@ -60,10 +60,10 @@ class Voo:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdVoo(self,idVoo):
+    def setId(self,idVoo):
         self.idVoo = idVoo
     
-    def getIdVoo(self):
+    def getId(self):
         return self.idVoo
 
     def setIdAviao(self,idAviao):

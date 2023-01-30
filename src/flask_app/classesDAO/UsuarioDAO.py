@@ -1,8 +1,6 @@
-
 from connectDB import ConectaBD
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import select, update, func, null, insert
-from connectDB import ConectaBD
 from User import Usuario
 from models import TbUsuario
 import logging

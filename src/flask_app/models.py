@@ -2,11 +2,11 @@ import datetime
 
 from sqlalchemy import Column, Integer, String, MetaData, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
-from flask_app.usuario.Usuario import Usuario
-from flask_app.aeroporto.Aeroporto import Aeroporto
-from flask_app.aviao.Aviao import Aviao
-from flask_app.passagem.Passagem import Passagem
-from flask_app.voo.Voo import Voo
+# from classes.Usuario import Usuario
+# from classes.Aeroporto import Aeroporto
+from classes.Aviao import Aviao
+# from classes.Passagem import Passagem
+# from classes.Voo import Voo
 
 Base = declarative_base()
 
@@ -33,7 +33,7 @@ r1 = User(user)
 
 print(r1)"""
 
-class Airport(Base):
+''' class Airport(Base):
     """This class defines the airports table"""
 
     __tablename__ = 'tb_aeroporto'
@@ -64,7 +64,7 @@ class Airport(Base):
     #     return Airport.query.all()
 
     def __repr__(self):
-        return 'airports: {}'.format(self.nome)
+        return 'airports: {}'.format(self.nome) '''
 
 
 class Airplane(Base):
@@ -72,40 +72,34 @@ class Airplane(Base):
 
     __tablename__ = 'tb_aviao'
 
-    id_aviao = Column(Integer, primary_key=True)
-    # assentos_todos = Column(Integer, nullable=False)
-    assentos_economicos = Column(Integer, nullable=False)
-    assentos_executivos = Column(Integer, nullable=False)
-    # flights = relationship('Flight', backref='airplane', lazy=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    qt_assentos_economicos = Column(Integer, nullable=False)
+    qt_assentos_executivos = Column(Integer, nullable=False)
 
-    def __init__(self, reg_number, assentos_economicos, assentos_executivos,
-                 first_class_seats):
+    def __init__(self, aviao):
         """Initialize the airplane details"""
-        self.reg_number = reg_number
-        self.assentos_todos = assentos_economicos + assentos_executivos
-        self.assentos_economicos = assentos_economicos
-        self.assentos_executivos = assentos_executivos
-        # self.first_class_seats = first_class_seats
+        if(aviao.getId() is not None):
+            self.id = aviao.getId()
+        self.qt_assentos_economicos = aviao.getQtAssentosEconomicos()
+        self.qt_assentos_executivos = aviao.getQtAssentosExecutivos()
 
     def serialize(self):
         """Return a dictionary"""
         return {
-            'id_airplane': self.id,
-            'reg_number': self.reg_number,
-            'assentos_executivos': self.assentos_executivos,
-            'assentos_economicos': self.assentos_economicos,
-            'assentos_todos': self.assentos_todos
+            'id': self.id,
+            'qt_assentos_executivos': self.qt_assentos_executivos,
+            'qt_assentos_economicos': self.qt_assentos_economicos,
         }
-
-    # @staticmethod
-    # def get_all():
-    #     return Airplane.query.all()
 
     def __repr__(self):
         return 'Airplane: {}'.format(self.reg_number)
 
+    def atualiza(self, aviao):
+        self.qt_assentos_economicos = aviao.getQtAssentosEconomicos()
+        self.qt_assentos_executivos = aviao.getQtAssentosExecutivos()
 
-class Flight(Base):
+
+''' class Flight(Base):
     """This class defines the flight schedules table"""
 
     __tablename__ = 'tb_voo'
@@ -184,4 +178,4 @@ class Booking(Base):
         }
 
     def __repr__(self):
-        return 'bookings: {}'.format(self.id)
+        return 'bookings: {}'.format(self.id) '''

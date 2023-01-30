@@ -37,7 +37,7 @@ class Passagem:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Passagem: %s\nidUsuario: %s\nidVoo: %s\ndataDeCompra: %s\n' % (self.getIdPassagem(), self.getIdUsuario().getNome(), self.getIdVoo(), self.getDataDeCompra())
+        return 'Passagem: %s\nidUsuario: %s\nidVoo: %s\ndataDeCompra: %s\n' % (self.getId(), self.getIdUsuario().getNome(), self.getIdVoo(), self.getDataDeCompra())
     
     def printa(self):
         print(self.__repr__())
@@ -52,10 +52,10 @@ class Passagem:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdPassagem(self,idPassagem):
+    def setId(self,idPassagem):
         self.idPassagem = idPassagem
     
-    def getIdPassagem(self):
+    def getId(self):
         return self.idPassagem
             
     def setIdVoo(self, idVoo):

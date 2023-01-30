@@ -31,7 +31,7 @@ class Aeroporto:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Aeroporto: %s\nNome: %s\nPaís: %s\ncidade: %s\n' % (self.getIdAeroporto(), self.getNome(), self.getPais(), self.getCidade())
+        return 'Aeroporto: %s\nNome: %s\nPaís: %s\ncidade: %s\n' % (self.getId(), self.getNome(), self.getPais(), self.getCidade())
     
     def printa(self):
         print(self.__repr__())
@@ -46,10 +46,10 @@ class Aeroporto:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdAeroporto(self,idAeroporto):
+    def setId(self,idAeroporto):
         self.idAeroporto = idAeroporto
     
-    def getIdAeroporto(self):
+    def getId(self):
         return self.idAeroporto
 
     def setNome(self,idAeroporto):
