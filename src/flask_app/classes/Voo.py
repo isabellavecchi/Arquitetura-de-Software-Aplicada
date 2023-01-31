@@ -2,25 +2,27 @@ import json
 import re
 import logging
 import datetime
+import numpy as np
 
-from Aviao import Aviao
-from Aeroporto import Aeroporto
+# from Aviao import Aviao
+# from Aeroporto import Aeroporto
 
 class Voo:
     #construtor
-    def __init__(self, idVoo=None, idAviao=None, dataDeSaida=None, idAeroportoSaida=None, dataDeChegada=None, idAeroportoChegada=None):
+    def __init__(self, idVoo=None, idAviao=None, lugaresDisponiveis=None, dataDeSaida=None, idAeroportoSaida=None, dataDeChegada=None, idAeroportoChegada=None, preco=None):
         try:
             self.idVoo = idVoo
+
             self.idAviao = idAviao
+            self.lugaresDisponiveis = lugaresDisponiveis
 
             self.dataDeSaida = dataDeSaida
             self.idAeroportoSaida = idAeroportoSaida
             
             self.dataDeChegada = dataDeChegada
             self.idAeroportoChegada = idAeroportoChegada
-
-            # self.qtTotalAssentos = idAviao.getQtAssentosTotais()
-
+            
+            self.preco = preco
         except Exception as e:
             logging.info(f'{e}')
             print(e)
@@ -36,7 +38,7 @@ class Voo:
             "idAeroportoSaida": self.idAeroportoSaida,
             "dataDeChegada": self.dataDeChegada,
             "idAeroportoChegada": self.idAeroportoChegada,
-            # "qtTotalAssentos": self.qtTotalAssentos,
+            "preco": self.preco
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -45,7 +47,7 @@ class Voo:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Voo: %s\nidAviao: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\n' % (self.getId(),self.getIdAviao(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida())
+        return 'Voo: %s\nidAviao: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\nPreco: %s\n' % (self.getId(),self.getIdAviao(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida(), self.getPreco())
     
     def printa(self):
         print(self.__repr__())
@@ -71,6 +73,12 @@ class Voo:
     
     def getIdAviao(self):
         return self.idAviao
+            
+    def setQtLugaresDisponiveis(self, lugaresDisponiveis):
+        self.lugaresDisponiveis = lugaresDisponiveis
+    
+    def getQtLugaresDisponiveis(self):
+        return self.lugaresDisponiveis
 
     def setDataDeSaida(self,dataDeSaida):
         self.dataDeSaida = dataDeSaida
@@ -96,13 +104,13 @@ class Voo:
     def getIdAeroportoSaida(self):
         return self.idAeroportoSaida
             
-    def setQtTotalAssentos(self, qtTotalAssentos):
-        self.qtTotalAssentos = qtTotalAssentos
+    def setPreco(self, preco):
+        self.preco = preco
     
-    def getQtTotalAssentos(self):
-        return self.qtTotalAssentos
+    def getPreco(self):
+        return self.preco
 
-aeroporto1 = Aeroporto(idAeroporto="1", nome = "garulhos", pais="Brasil", cidade="Sao Paulo")
+''' aeroporto1 = Aeroporto(idAeroporto="1", nome = "garulhos", pais="Brasil", cidade="Sao Paulo")
 print(aeroporto1.__repr__())
 aeroporto2 = Aeroporto(idAeroporto="2", nome = "base interespacial", pais="Brasil", cidade="Sao Jorge")
 print(aeroporto2.__repr__())
@@ -110,4 +118,4 @@ aviao = Aviao(idAviao="1", qtAssentosEconomicos=3, qtAssentosExecutivos=5)
 print(aviao.__repr__())
 
 user = Voo(idVoo=1, idAviao=aviao.getIdAviao(), dataDeSaida="12-03-2023", idAeroportoSaida=aeroporto1.getIdAeroporto(), dataDeChegada="21-03-2023", idAeroportoChegada=aeroporto2.getIdAeroporto())
-print(user.__repr__())
+print(user.__repr__()) '''

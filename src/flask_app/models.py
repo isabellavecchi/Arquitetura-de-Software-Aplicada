@@ -1,62 +1,68 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, MetaData, UniqueConstraint
+from sqlalchemy import Column, Integer, String, MetaData, UniqueConstraint, ForeignKey, Table, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-# from classes.Usuario import Usuario
-# from classes.Aeroporto import Aeroporto
-from classes.Aviao import Aviao
-# from classes.Passagem import Passagem
-# from classes.Voo import Voo
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+###################### Usuario ######################
+
 class User(Base):   #Client é filho da classe Base
     __tablename__ = 'tb_usuario'
-    id_usuario = Column(Integer, primary_key=True, autoincrement=True)
-    nome = Column(String(80)) #VARCHAR 
-    cpf = Column(String(11), unique=True)
-    endereco = Column(String(200))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String(80)) #VARCHAR
     email = Column(String(100), unique=True)
+    senha = Column(String(200))
 
     def __init__(self, usuario):
+        if(usuario.getId() is not None):
+            self.id = usuario.getId()
         self.nome = usuario.getNome()
-        self.cpf = usuario.getCPF()
-        self.endereco = usuario.getEndereco()
         self.email = usuario.getEmail()
-
-    # def __repr__(self):
-    #     return 'usuario: %s\nEndereco: %s\nEmail: %s\n' % (self.nome, self.endereco, self.email)
-
-"""user = Usuario(nome="Usuario um", endereco="Rua 1", email="Usuario1@ufu.br")
-
-r1 = User(user)
-
-print(r1)"""
-
-''' class Airport(Base):
-    """This class defines the airports table"""
-
-    __tablename__ = 'tb_aeroporto'
-
-    id_aeroporto = Column(Integer, primary_key=True, autoincrement=True)
-    nome = Column(String(256), nullable=False)
-    country = Column(String(256), nullable=False)
-    city = Column(String(256), nullable=False)
-    # flights = relationship('Flight', backref='airport', lazy=True)
-
-    def __init__(self, nome, country, city):
-        """Initialize the airport with the airport details"""
-        self.nome = nome
-        self.country = country
-        self.city = city
+        self.senha = usuario.getSenha()
 
     def serialize(self):
         """Return a dictionary"""
         return {
-            'airport_id': self.id_aeroporto,
-            'airport_nome': self.nome,
-            'country': self.country,
-            'city': self.city
+            'id': self.id,
+            'nome': self.nome,
+            'email': self.email,
+            'senha': self.senha
+        }
+
+    def __repr__(self):
+        return 'ID: %s\nusuario: %s\nEmail: %s\nsenha: %s\n' % (self.id, self.nome, self.email, self.senha)
+
+
+###################### Aeroporto ######################
+
+class Airport(Base):
+    """This class defines the tb_aeroporto table"""
+
+    __tablename__ = 'tb_aeroporto'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String(256), nullable=False)
+    estado = Column(String(256), nullable=False)
+    cidade = Column(String(256), nullable=False)
+    # flights = relationship('Flight', backref='airport', lazy=True)
+
+    def __init__(self, aeroporto):
+        """Initialize the airport with the airport details"""
+        if(aeroporto.getId() is not None):
+            self.id = aeroporto.getId()
+        self.nome = aeroporto.getNome()
+        self.estado = aeroporto.getEstado()
+        self.cidade = aeroporto.getCidade()
+
+    def serialize(self):
+        """Return a dictionary"""
+        return {
+            'id': self.id,
+            'nome': self.nome,
+            'estado': self.estado,
+            'cidade': self.cidade
         }
 
     # @staticmethod
@@ -64,83 +70,82 @@ print(r1)"""
     #     return Airport.query.all()
 
     def __repr__(self):
-        return 'airports: {}'.format(self.nome) '''
+        return 'tb_aeroporto: {}'.format(self.nome)
 
+
+###################### Aviao ######################
 
 class Airplane(Base):
-    """This class defines the airplanes table"""
+    """This class defines the tb_aviao table"""
 
     __tablename__ = 'tb_aviao'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    qt_assentos_economicos = Column(Integer, nullable=False)
-    qt_assentos_executivos = Column(Integer, nullable=False)
+    qt_total_assentos = Column(Integer, nullable=False)
 
     def __init__(self, aviao):
         """Initialize the airplane details"""
         if(aviao.getId() is not None):
             self.id = aviao.getId()
-        self.qt_assentos_economicos = aviao.getQtAssentosEconomicos()
-        self.qt_assentos_executivos = aviao.getQtAssentosExecutivos()
+        self.qt_total_assentos = aviao.getQtAssentosTotais()
 
     def serialize(self):
         """Return a dictionary"""
         return {
             'id': self.id,
-            'qt_assentos_executivos': self.qt_assentos_executivos,
-            'qt_assentos_economicos': self.qt_assentos_economicos,
+            'qt_total_assentos': self.qt_total_assentos
         }
 
     def __repr__(self):
         return 'Airplane: {}'.format(self.reg_number)
 
-    def atualiza(self, aviao):
-        self.qt_assentos_economicos = aviao.getQtAssentosEconomicos()
-        self.qt_assentos_executivos = aviao.getQtAssentosExecutivos()
 
+###################### Voo ######################
 
-''' class Flight(Base):
+class Flight(Base):
     """This class defines the flight schedules table"""
 
     __tablename__ = 'tb_voo'
 
-    id_voo = Column(Integer, primary_key=True)
-    departure_date = Column(DateTime, nullable=False)
-    id_departure_airport = Column(Integer, ForeignKey('airports.id_aeroporto'),
-                                     nullable=False)
-    arrival_date = Column(DateTime, nullable=False)
-    id_arrival_airport = Column(Integer, nullable=False)
-    status = Column(String(256), default='upcoming')
-    id_airplane = Column(Integer, ForeignKey('airplanes.id'),
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    id_aviao = Column(Integer, ForeignKey('tb_aviao.id'),
                             nullable=False)
-    booked_business = Column(Integer, default=0)
-    booked_economy = Column(Integer, default=0)
-    bookings = relationship('Booking', backref='flight', lazy=True)
+    qt_lugares_disponiveis = Column(Integer, default=0)
+    data_saida = Column(DateTime, nullable=False)
+    id_aeroporto_saida = Column(Integer, ForeignKey('tb_aeroporto.id'),
+                                     nullable=False)
+    data_chegada = Column(DateTime, nullable=False)
+    id_aeroporto_chegada = Column(Integer, ForeignKey('tb_aeroporto.id'),
+                                     nullable=False)
+    preco = Column(Float, default=0)
 
-    def __init__(self, departure_date, id_departure_airport, arrival_date,
-                 id_arrival_airport, id_airplane):
+    def __init__(self, voo):
         """Initialize the flight details"""
-        self.departure_date = departure_date
-        self.id_departure_airport = id_departure_airport
-        self.arrival_date = arrival_date
-        self.id_arrival_airport = id_arrival_airport
-        self.id_airplane = id_airplane
+        if(voo.getId() is not None):
+            self.id = voo.getId()
+        self.id_aviao = voo.getIdAviao()
+        self.qt_lugares_disponiveis = voo.getQtLugaresDisponiveis()
+        self.data_saida = voo.getDataDeSaida()
+        self.id_aeroporto_saida = voo.getIdAeroportoSaida()
+        self.data_chegada = voo.getDataDeChegada()
+        self.id_aeroporto_chegada = voo.getIdAeroportoSaida()
+        self.preco = voo.getPreco()
 
     # def get_arrival_airport(self):
-    #     return Airport.query.filter_by(id=self.id_arrival_airport).first()
+    #     return Airport.query.filter_by(id=self.id_aeroporto_chegada).first()
 
     def serialize(self):
         """Return a dictionary"""
         self.arrival_airport = self.get_arrival_airport()
         return {
-            'id_voo': self.id_voo,
-            'departure_date': self.departure_date,
-            'departure_airport': self.airport.nome,
-            'departure_city': self.airport.city,
-            'arrival_date': self.arrival_date,
-            'arrival_airport': self.arrival_airport.nome,
-            'arrival_city': self.arrival_airport.city,
-            'flight_status': self.status
+            'id': self.id,
+            'id_aviao': self.id_aviao,
+            'qt_lugares_disponiveis': self.qt_lugares_disponiveis,
+            'data_saida': self.data_saida,
+            'id_aeroporto_saida': self.id_aeroporto_saida,
+            'data_chegada': self.data_chegada,
+            'id_aeroporto_chegada': self.id_aeroporto_chegada,
+            'preco': self.preco
         }
 
     # @staticmethod
@@ -150,32 +155,38 @@ class Airplane(Base):
     def __repr__(self):
         return 'Flight: {}'.format(self.id)
 
+
+###################### Passagem ######################
 class Booking(Base):
-    """This class defines the bookings table"""
+    """This class defines the tb_passagem table"""
 
-    __tablename__ = 'bookings'
+    __tablename__ = 'tb_passagem'
 
-    id_passagem = Column(Integer, primary_key=True)
-    data_compra = Column(DateTime, nullable=False)
-    id_usuario = Column(Integer, ForeignKey('users.id_usuario'), nullable=False)
-    id_voo = Column(Integer, ForeignKey('flights.id_voo'),
-                          nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    id_voo = Column(Integer, ForeignKey('tb_voo.id'),
+                            nullable=False)
+    data_compra = Column(DateTime, default=datetime.datetime.now())
+    nome_comprador = Column(String(256), nullable=False)
+    cpf_comprador = Column(String(17), nullable=False)
     # email_status = Column(String(120), nullable=False, default='pending')
 
-    def __init__(self, id_usuario, id_voo, status='pending'):
+    def __init__(self, passagem):
         """Initialize the booking with the reservation details"""
-        self.data_compra = datetime.datetime.now()
-        self.id_usuario = id_usuario
-        self.id_voo = id_voo
-        # self.email_status = status
+        if(passagem.getId() is not None):
+            self.id = passagem.getId()
+        self.id_voo = passagem.getIdVoo()
+        self.nome_comprador = passagem.getNomeComprador()
+        self.cpf_comprador = passagem.geCPFcomprador()
 
     def serialize(self):
         """Return a dictionary"""
         return {
+            "id": self.id,
+            "id_voo": self.id_voo,
             "data_compra": self.data_compra,
-            "booked_by": self.owner.nome,
-            # "email_status": self.email_status
+            "nome_comprador": self.nome_comprador,
+            "cpf_comprador": self.cpf_comprador
         }
 
     def __repr__(self):
-        return 'bookings: {}'.format(self.id) '''
+        return 'tb_passagem: {}'.format(self.id)

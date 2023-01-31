@@ -7,9 +7,9 @@ class Usuario:
     def __init__(self, idUsuario=None, nome=None, email=None, senha=None):
         try:
             self.idUsuario = idUsuario
-            novaSenha = Usuario.criptografarSenha(senha)
             self.nome = nome
             self.email = email
+            novaSenha = Usuario.criptografarSenha(senha)
             self.senha = novaSenha
         except Exception as e:
             logging.info(f'{e}')
@@ -70,8 +70,8 @@ class Usuario:
     def getEmail(self):
         return self.email
 
-    def setSenha(self,nome):
-        self.nome = nome
+    def setSenha(self,senha):
+        self.senha = Usuario.criptografarSenha(senha)
     
     def getSenha(self):
         return self.senha

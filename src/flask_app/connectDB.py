@@ -2,8 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select, update, func, null, insert
-# from models import Base, User, Airport, Airplane, Flight, Booking
-from models import Base, Airplane
+from models import Base
 import logging
 
 # print(DATABASE_URL)
@@ -74,7 +73,23 @@ class ConectaBD:
             return row
 
         except Exception as e:
-            logging.warning(f'XABUUUUU adicionando por input... {e}')
+            logging.warning(f'XABUUUUU adicionando por input... ', e)
+    
+    def addObjectsListInTable(self, objectList, Table):
+        try:
+            rObjects = []
+            for object in objectList:
+                rObjects.append(Table(object))
+
+            session = self.getSession()
+            session.add_all(rObjects)
+            session.commit()
+            logging.info('USUARIES ADICIONADES COM SUCESSO!!')
+
+            return objectList
+
+        except Exception as e:
+            logging.warning(f'XABUUUUU adicionando por input... ', e)
     
     def getTable(self, Table):
         try:
@@ -88,16 +103,22 @@ class ConectaBD:
             logging.info(f'XABUUUUU ... {e}')
 
     def getObjectById(self, Table, idObject):
-        conn = self.getConnection()     
-        
-        s = select(Table).where(Table.id == idObject)
-        rObject = conn.execute(s)
-        
-        result_set_as_dict = rObject.mappings().all()
-        return result_set_as_dict
-        # for row in res:
-        #     logging.info(f"{row['nome']}")        
-        #     print(row['nome'])
+        try:
+            conn = self.getConnection()     
+            
+            s = select(Table).where(Table.id == idObject)
+            rObject = conn.execute(s)
+            
+            result_set_as_dict = rObject.mappings().all()
+            if result_set_as_dict != []:
+                return result_set_as_dict[0]
+            else:
+                raise Exception("NENHUMA LINHA ENCONTRADA")
+
+        except Exception as e:
+            print(e)
+            ret = {"status": str(e)}
+            logging.info('XABUUUUU ... {',e,'}')
     
     def updateObjectById(self, Table, object):
         object = Table(object)
@@ -109,7 +130,7 @@ class ConectaBD:
         for object in objectList:
             self.updateObjectById(Table, object)
     
-    def deleteObjectByIDs(self, Table, id):
+    def deleteObjectByIDs(self, Table, idArray):
         session = self.getSession()
-        session.query(Table).filter(Table.id.in_(id)).delete()
+        session.query(Table).filter(Table.id.in_(idArray)).delete()
         session.commit()

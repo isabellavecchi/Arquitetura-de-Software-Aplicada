@@ -3,6 +3,7 @@ from sqlalchemy.orm import scoped_session
 from sqlalchemy import select, update, func, null, insert
 from classes.Aviao import Aviao
 from models import Airplane
+import logging
 
 class AviaoDAO:
     #constructor
@@ -17,12 +18,18 @@ class AviaoDAO:
         table = self.conectaBD.getTable(Airplane)
         avioes = []
         for row in table:
-            avioes.append(Aviao(idAviao=row.id, qtAssentosEconomicos=row.qt_assentos_economicos, qtAssentosExecutivos=row.qt_assentos_executivos))
+            avioes.append(Aviao(idAviao=row.id, qtTotalAssentos=row.qt_total_assentos))
         return avioes
     
     def getAviaoById(self, idAviao):
-        rAviao = self.conectaBD.getObjectById(Airplane, idAviao)
-        return rAviao
+        try:
+            rAviao = self.conectaBD.getObjectById(Airplane, idAviao)
+            return Aviao(idAviao=rAviao.id, qtTotalAssentos=rAviao.qt_total_assentos)
+
+        except Exception as e:
+            print(e)
+            ret = {"status": str(e)}
+            logging.info(f'XABUUUUU ... {e}')
     
     def updateAviaoById(self, aviao):
         self.conectaBD.updateObjectById(Airplane, aviao)

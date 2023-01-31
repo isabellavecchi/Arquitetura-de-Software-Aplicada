@@ -2,19 +2,14 @@ import json
 import re
 import logging
 
-from Aeroporto import Aeroporto
-from Aviao import Aviao
-from Voo import Voo
-from Usuario import Usuario
-
 class Passagem:
     #construtor
-    def __init__(self, idPassagem=None, idVoo=None, dataDeCompra=None, idUsuario=None):
+    def __init__(self, idPassagem=None, idVoo=None, nomeComprador=None, cpfComprador=None):
         try:
             self.idPassagem = idPassagem
             self.idVoo = idVoo
-            self.dataDeCompra = dataDeCompra
-            self.idUsuario = idUsuario
+            self.nomeComprador = nomeComprador
+            self.cpfComprador = cpfComprador
             
         except Exception as e:
             logging.info(f'{e}')
@@ -27,8 +22,8 @@ class Passagem:
         yield from{
             "idPassagem": self.idPassagem,
             "idVoo": self.idVoo,
-            "dataDeCompra": self.dataDeCompra,
-            "idUsuario": self.idUsuario
+            "nomeComprador": self.nomeComprador,
+            "cpfComprador": self.cpfComprador
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -37,7 +32,7 @@ class Passagem:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Passagem: %s\nidUsuario: %s\nidVoo: %s\ndataDeCompra: %s\n' % (self.getId(), self.getIdUsuario().getNome(), self.getIdVoo(), self.getDataDeCompra())
+        return 'Passagem: %s\nidVoo: %s\nnomeComprador: %s\ncpfComprador: %s\n' % (self.getId(), self.getIdVoo(), self.getNomeComprador(), self.geCPFcomprador())
     
     def printa(self):
         print(self.__repr__())
@@ -64,19 +59,19 @@ class Passagem:
     def getIdVoo(self):
         return self.idVoo
 
-    def setDataDeCompra(self,dataDeCompra):
-        self.dataDeCompra = dataDeCompra
+    def setNomeComprador(self,nomeComprador):
+        self.nomeComprador = nomeComprador
     
-    def getDataDeCompra(self):
-        return self.dataDeCompra
+    def getNomeComprador(self):
+        return self.nomeComprador
             
-    def setIdUsuario(self, idUsuario):
-        self.idUsuario = idUsuario
+    def seCPFcomprador(self, cpfComprador):
+        self.cpfComprador = cpfComprador
     
-    def getIdUsuario(self):
-        return self.idUsuario
+    def geCPFcomprador(self):
+        return self.cpfComprador
 
-user = Usuario(idUsuario=1 ,nome="idUsuario um", cpf="12412312523", endereco="Rua 1", email="idUsuario1@ufu.br")
+''' user = Usuario(cpfComprador=1 ,nome="cpfComprador um", cpf="12412312523", endereco="Rua 1", email="cpfComprador1@ufu.br")
 print(user.__repr__())
 
 aeroporto1 = Aeroporto(idAeroporto="1", nome = "garulhos", pais="Brasil", cidade="Sao Paulo")
@@ -89,5 +84,5 @@ print(aviao.__repr__())
 idVoo = Voo(idVoo=1, idAviao=aviao.getIdAviao(), dataDeSaida="12-03-2023", idAeroportoSaida=aeroporto1.getIdAeroporto(), dataDeChegada="21-03-2023", idAeroportoChegada=aeroporto2.getIdAeroporto())
 print(idVoo.__repr__()) 
 
-passagem = Passagem(idPassagem=1, idVoo=idVoo.getIdVoo(), dataDeCompra="28-01-2023", idUsuario=user.getIdUsuario())
-print(passagem)
+passagem = Passagem(idPassagem=1, idVoo=idVoo.getIdVoo(), nomeComprador="28-01-2023", cpfComprador=user.geCPFcomprador())
+print(passagem) '''
