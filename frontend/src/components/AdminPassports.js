@@ -8,19 +8,22 @@ import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 
-export const aeroportos = [
-  {id:"1",estacao:"uberlandia", avioes:"15"},
-  {id:"2",estacao:"sao paulo", avioes:"14"},
-  {id:"3",estacao:"belo horizonte", avioes:"12"},
-  {id:"4",estacao:"bahia", avioes:"10"}
+export const voos = [
+  {id:"1",partida:"uberlandia", destino:"sao paulo", dia:"22/07/2023", horario:"19:00", valor:"250,00"},
+  {id:"2",partida:"sao paulo", destino:"uberlandia", dia:"24/07/2023", horario:"10:00", valor:"340,00"},
+  {id:"3",partida:"belo horizonte", destino:"sao paulo", dia:"20/07/2023", horario:"13:00", valor:"370,00"},
+  {id:"4",partida:"uberlandia", destino:"bahia", dia:"21/07/2023", horario:"9:00", valor:"650,00"}
 ]
 
-export const renderaeroportos = (aeroporto, index) => {
+export const renderVoos = (voo, index) => {
   return(
       <tr key={index}>
-      <td>{aeroporto.id}</td>
-      <td>{aeroporto.estacao}</td>
-      <td>{aeroporto.avioes}</td>
+      <td>{voo.id}</td>
+      <td>{voo.partida}</td>
+      <td>{voo.destino}</td>
+      <td>{voo.dia}</td>
+      <td>{voo.horario}</td>
+      <td>{voo.valor}</td>
       <td> 
         <Button className='mx-1' variant="info"><FaPen color="white" /></Button>
         <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
@@ -44,7 +47,7 @@ return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
         <p>Admin</p>
         
-        <p>Lista de aeroportos</p>
+        <p>Lista de aeroportos com passagens disponíveis</p>
         <div className='m-2'>
         <Button variant="success" onClick={handleShow}>Criar novo trajeto</Button>
         </div>
@@ -59,17 +62,20 @@ return(
       <thead>
         <tr>
           <th>id</th>
-          <th>estacao</th>
-          <th>avioes</th>
+          <th>Partida</th>
+          <th>Destino</th>
+          <th>Dia</th>
+          <th>Horario</th>
+          <th>valor</th>
         </tr>
       </thead>
       <tbody>
-        {aeroportos.filter((aeroporto)=>{
-          return search.toLowerCase() ===''? aeroporto: aeroporto.estacao.toLowerCase()
+        {voos.filter((voo)=>{
+          return search.toLowerCase() ===''? voo: voo.partida.toLowerCase()
           .includes(search)
         })
         
-        .map(renderaeroportos)}
+        .map(renderVoos)}
      </tbody>
     </ReactBootStrap.Table>
        
@@ -81,13 +87,13 @@ return(
 
         <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>estacao</Form.Label>
-        <Form.Control type="text" placeholder="estacao" />
+        <Form.Label>Partida</Form.Label>
+        <Form.Control type="text" placeholder="Partida" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>avioes</Form.Label>
-        <Form.Control type="text" placeholder="avioes" />
+        <Form.Label>Destino</Form.Label>
+        <Form.Control type="text" placeholder="Destino" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">

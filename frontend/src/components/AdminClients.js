@@ -15,78 +15,28 @@ export const clientss = [
   {id:"4",usuario:"Augusto", email:"augusto@hotmail.com", viagens:"São Paulo -> Uberlândia 21/07/2023"}
 ]
 
-export function renderClientes (clients, index) {
-  const [lgShow, setLgShow] = useState(false);
-  
+export const renderClientes = (clients, index) => {
   return(
- 
-    
-    <>
-   
-    
       <tr key={index}>
       <td>{clients.id}</td>
       <td>{clients.usuario}</td>
       <td>{clients.email}</td>
       <td>{clients.viagens}</td>
       <td> 
-        <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button>
+        <Button className='mx-1' variant="info"><FaPen color="white" /></Button>
         <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
         </td>
     </tr>
-      <Modal
-        size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            Large Modal
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail" >
-        <Form.Label>Nome atual ({clients.usuario})</Form.Label>
-        <Form.Control type="text" placeholder="novo nome de usuario"  />
-      </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Email atual ({(clients.email)})</Form.Label>
-        <Form.Control type="text" placeholder="novo email para o usuario" />
-      </Form.Group>
-
- 
-    </Form>
-          <Modal.Footer>
-          <Button variant="secondary" onClick={() => setLgShow(false)} >
-            Cancelar
-          </Button>
-          <Button variant="primary" >
-            Salvar alterações
-          </Button>
-        </Modal.Footer>
-      
-
-        </Modal.Body>
-      </Modal>
-
-      </>
-
-
-
-)
+  )
 
 }
 
 
-const AdminTickets=()=>{
+const AdminPassports=()=>{
 
   const [show, setShow] = useState(false); //modal
   const handleClose = () => setShow(false);
-
-
 
 
   const [search, setSearch] = useState("")
@@ -104,14 +54,13 @@ return(
          </Form>
 
         {/* <ReactBootStrap.Table></ReactBootStrap.Table> */}
-        <ReactBootStrap.Table striped bordered hover className="text-center">
+        <ReactBootStrap.Table striped bordered hover >
       <thead>
         <tr>
           <th>id</th>
           <th>Cliente</th>
           <th>Email</th>
           <th>Viagens</th>
-          <th>Editar</th>
         </tr>
       </thead>
       <tbody>
@@ -172,9 +121,8 @@ return(
       </Modal>
         
     </div>
-
 )
 
 }
 
-export default AdminTickets
+export default AdminPassports
