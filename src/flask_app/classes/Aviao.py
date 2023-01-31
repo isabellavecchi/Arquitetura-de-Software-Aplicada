@@ -4,12 +4,10 @@ import logging
 
 class Aviao:
     #construtor
-    def __init__(self, idAviao=None, qtAssentosEconomicos=None, qtAssentosExecutivos=None):
+    def __init__(self, idAviao=None, qtTotalAssentos=None):
         try:
             self.idAviao = idAviao
-            self.qtAssentosEconomicos = qtAssentosEconomicos
-            self.qtAssentosExecutivos = qtAssentosExecutivos
-            self.qtTotalAssentos = qtAssentosEconomicos + qtAssentosExecutivos
+            self.qtTotalAssentos = qtTotalAssentos
         except Exception as e:
             logging.info(f'{e}')
             print(e)
@@ -21,8 +19,6 @@ class Aviao:
         yield from{
             "idAviao": self.idAviao,
             "qtTotalAssentos": self.qtTotalAssentos,
-            "qtAssentosEconomicos": self.qtAssentosEconomicos,
-            "qtAssentosExecutivos": self.qtAssentosExecutivos
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -31,7 +27,7 @@ class Aviao:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Aviao: %s\nQtAssentosEconomicos: %s\nQtAssentosExecutivos: %s\nQtAssentosTotais: %s\n' % (self.getIdAviao(), self.getQtAssentosEconomicos(), self.getQtAssentosExecutivos(), self.getQtAssentosTotais())
+        return 'Aviao: %s\nQtAssentosTotais: %s\n' % (self.getId(), self.getQtAssentosTotais())
     
     def printa(self):
         print(self.__repr__())
@@ -46,29 +42,17 @@ class Aviao:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdAviao(self,idAviao):
+    def setId(self,idAviao):
         self.idAviao = idAviao
     
-    def getIdAviao(self):
+    def getId(self):
         return self.idAviao
 
-    def setQtAssentosEconomicos(self,qtAssentosEconomicos):
-        self.qtAssentosEconomicos = qtAssentosEconomicos
-    
-    def getQtAssentosEconomicos(self):
-        return self.qtAssentosEconomicos
-            
-    def setQtAssentosExecutivos(self, qtAssentosExecutivos):
-        self.qtAssentosExecutivos = qtAssentosExecutivos
-    
-    def getQtAssentosExecutivos(self):
-        return self.qtAssentosExecutivos
-            
-    def setQtAssentosTotais(self, qtTotalAssentos):
+    def setQtTotalAssentos(self,qtTotalAssentos):
         self.qtTotalAssentos = qtTotalAssentos
     
     def getQtAssentosTotais(self):
         return self.qtTotalAssentos
 
-''' aviao = Aviao(idAviao="1", qtAssentosEconomicos=3, qtAssentosExecutivos=5)
+''' aviao = Aviao(idAviao="1", qtTotalAssentos=3, qtAssentosExecutivos=5)
 print(aviao.__repr__()) '''

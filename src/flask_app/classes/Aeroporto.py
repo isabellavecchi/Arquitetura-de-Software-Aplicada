@@ -4,11 +4,11 @@ import logging
 
 class Aeroporto:
     #construtor
-    def __init__(self, idAeroporto=None, nome=None, pais=None, cidade=None):
+    def __init__(self, idAeroporto=None, nome=None, estado=None, cidade=None):
         try:
             self.idAeroporto = idAeroporto
             self.nome = nome
-            self.pais = pais
+            self.estado = estado
             self.cidade = cidade
         except Exception as e:
             logging.info(f'{e}')
@@ -21,7 +21,7 @@ class Aeroporto:
         yield from{
             "idAeroporto": self.idAeroporto,
             "nome": self.nome,
-            "pais": self.pais,
+            "estado": self.estado,
             "cidade": self.cidade
         }.items()
     
@@ -31,7 +31,7 @@ class Aeroporto:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Aeroporto: %s\nNome: %s\nPaís: %s\ncidade: %s\n' % (self.getIdAeroporto(), self.getNome(), self.getPais(), self.getCidade())
+        return 'Aeroporto: %s\nNome: %s\nPaís: %s\ncidade: %s\n' % (self.getId(), self.getNome(), self.getEstado(), self.getCidade())
     
     def printa(self):
         print(self.__repr__())
@@ -46,10 +46,10 @@ class Aeroporto:
     #VALIDACOES
     # GETTERS AND SETTERS
 
-    def setIdAeroporto(self,idAeroporto):
+    def setId(self,idAeroporto):
         self.idAeroporto = idAeroporto
     
-    def getIdAeroporto(self):
+    def getId(self):
         return self.idAeroporto
 
     def setNome(self,idAeroporto):
@@ -58,11 +58,11 @@ class Aeroporto:
     def getNome(self):
         return self.nome
             
-    def setPais(self, pais):
-        self.pais = pais
+    def setEstado(self, estado):
+        self.estado = estado
     
-    def getPais(self):
-        return self.pais
+    def getEstado(self):
+        return self.estado
             
     def setCidade(self,cidade):
         self.cidade = cidade
@@ -70,5 +70,5 @@ class Aeroporto:
     def getCidade(self):
         return self.cidade
 
-''' aeroporto = Aeroporto(idAeroporto="1", nome = "garulhos", pais="Brasil", cidade="Sao Paulo")
+''' aeroporto = Aeroporto(idAeroporto="1", nome = "garulhos", estado="Brasil", cidade="Sao Paulo")
 print(aeroporto.__repr__()) '''

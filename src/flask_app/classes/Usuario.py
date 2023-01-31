@@ -7,9 +7,9 @@ class Usuario:
     def __init__(self, idUsuario=None, nome=None, email=None, senha=None):
         try:
             self.idUsuario = idUsuario
-            novaSenha = Usuario.criptografarSenha(senha)
             self.nome = nome
             self.email = email
+            novaSenha = Usuario.criptografarSenha(senha)
             self.senha = novaSenha
         except Exception as e:
             logging.info(f'{e}')
@@ -31,7 +31,7 @@ class Usuario:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Usuario: %s\nNome: %s\nEmail: %s\n' % (self.getIdUsuario(), self.getNome(), self.getEmail())
+        return 'Usuario: %s\nNome: %s\nEmail: %s\n' % (self.getId(), self.getNome(), self.getEmail())
     
     def printa(self):
         print(self.__repr__())
@@ -52,10 +52,10 @@ class Usuario:
 
     # GETTERS AND SETTERS
 
-    def setIdUsuario(self,idUsuario):
+    def setId(self,idUsuario):
         self.idUsuario = idUsuario
     
-    def getIdUsuario(self):
+    def getId(self):
         return self.idUsuario
 
     def setNome(self,nome):
@@ -70,8 +70,8 @@ class Usuario:
     def getEmail(self):
         return self.email
 
-    def setSenha(self,nome):
-        self.nome = nome
+    def setSenha(self,senha):
+        self.senha = Usuario.criptografarSenha(senha)
     
     def getSenha(self):
         return self.senha
