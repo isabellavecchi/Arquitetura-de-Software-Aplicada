@@ -10,7 +10,7 @@ return(
          
         
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" controlId="formBasicLogin">
         <Form.Label>Usuario</Form.Label>
         <Form.Control type="text" placeholder="Entre com seu usuario" />
       </Form.Group>

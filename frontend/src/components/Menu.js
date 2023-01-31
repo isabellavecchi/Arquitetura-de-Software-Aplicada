@@ -15,10 +15,11 @@ const Menu = ()=>{
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={NavLink} to="/"> Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/cadastro">Cadastre-se</Nav.Link>
+            <Nav.Link as={NavLink} to="/cadastro">Cadastrar</Nav.Link>
             <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
             <Nav.Link as={NavLink} to="/passagens">Comprar passagens</Nav.Link>
-            <Nav.Link as={NavLink} to="/adminP">Administrar voos</Nav.Link>
+            <Nav.Link as={NavLink} to="/userP">Minhas viagens</Nav.Link>
+            <Nav.Link as={NavLink} to="/adminT">Administrar voos</Nav.Link>
             <Nav.Link as={NavLink} to="/adminC">Administrar Clientes</Nav.Link>
             <Nav.Link as={NavLink} to="/adminA">Administrar Aeroportos</Nav.Link>
             <Nav.Link as={NavLink} to="/link">Logout</Nav.Link>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button'
 import * as ReactBootStrap from 'react-bootstrap';
-import {voos} from './AdminPassports';
+import {voos} from './AdminTickets';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
@@ -13,8 +13,10 @@ export const renderVoos = (voo, index) => {
       <td>{voo.id}</td>
       <td>{voo.partida}</td>
       <td>{voo.destino}</td>
-      <td>{voo.dia}</td>
-      <td>{voo.horario}</td>
+      <td>{voo.diaP}</td>
+      <td>{voo.horarioP}</td>
+      <td>{voo.diaC}</td>
+      <td>{voo.horarioC}</td>
       <td>{voo.valor}</td>
       
     </tr>
@@ -48,14 +50,16 @@ return(
         <Button variant="success" onClick={handleShow}>Comprar passagem</Button>
         </div>
         {/* <ReactBootStrap.Table></ReactBootStrap.Table> */}
-        <ReactBootStrap.Table striped bordered hover >
+        <ReactBootStrap.Table striped bordered hover className='text-center' >
       <thead>
         <tr>
           <th>id</th>
           <th>Partida</th>
           <th>Destino</th>
-          <th>Dia</th>
-          <th>Horario</th>
+          <th>Data Partida</th>
+          <th>Horario de Partida</th>
+          <th>Data chegada</th>
+          <th>Horario de Chegada</th>
           <th>valor</th>
         </tr>
       </thead>

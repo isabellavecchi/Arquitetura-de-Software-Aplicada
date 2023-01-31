@@ -8,7 +8,7 @@ return(
     <div className="container  d-flex align-items-center flex-column mt-5">
         Cadastro
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" controlId="formBasicLogin">
         <Form.Label>Usuario</Form.Label>
         <Form.Control type="text" placeholder="Entre com seu usuario" />
       </Form.Group>

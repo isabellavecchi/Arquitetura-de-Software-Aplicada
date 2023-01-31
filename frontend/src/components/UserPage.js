@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { FaPen } from "react-icons/fa";
-import {AiOutlineClose} from "react-icons/ai";
+
+
 import Modal from 'react-bootstrap/Modal';
-import { InputGroup } from 'react-bootstrap';
+// import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import {NavLink } from 'react-router-dom';
+import { voos } from './AdminTickets';
 
-
-export const aeroportos = [
-  {id:"1",estacao:"uberlandia", avioes:"15"},
-  {id:"2",estacao:"sao paulo", avioes:"14"},
-  {id:"3",estacao:"belo horizonte", avioes:"12"},
-  {id:"4",estacao:"bahia", avioes:"10"}
-]
-
-export function renderaeroportos (aeroporto, index) {
+export function rendervoos (voo, index) {
   const [lgShow, setLgShow] = useState(false);
   return(
     <>
       <tr key={index}>
-      <td>{aeroporto.id}</td>
-      <td>{aeroporto.estacao}</td>
-      <td>{aeroporto.avioes}</td>
+      <td>{voo.id}</td>
+      <td>{voo.partida}</td>
+      <td>{voo.destino}</td>
+      <td>{voo.diaP}</td>
+      <td>{voo.horarioP}</td>
+      <td>{voo.diaC}</td>
+      <td>{voo.horarioC}</td>
+      <td>{voo.valor}</td>
       <td> 
-        <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button>
-        <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
+        <Button variant="danger"> Cancelar Passagem </Button>
         </td>
     </tr>
     <Modal
@@ -43,12 +41,12 @@ export function renderaeroportos (aeroporto, index) {
         <Form>
      
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Estação atual ({(aeroporto.estacao)})</Form.Label>
+        <Form.Label>Estação atual ({(voo.partida)})</Form.Label>
         <Form.Control type="text" placeholder="nova localização de estação" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Quantidade de avioes atual: {aeroporto.avioes}</Form.Label>
+        <Form.Label>Quantidade de avioes atual: {voo.chegada}</Form.Label>
         <Form.Control type="text" placeholder="nova quantidade de aviões" />
         
       </Form.Group>
@@ -74,44 +72,44 @@ export function renderaeroportos (aeroporto, index) {
 }
 
 
-const AdminAirports=()=>{
+const UserPage=()=>{
 
   const [show, setShow] = useState(false); //modal
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+//   const handleShow = () => setShow(true);
 
-  const [search, setSearch] = useState("")
+  const [search] = useState("")
   
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
-        <p>Admin</p>
-        
-        <p>Lista de aeroportos</p>
+        <p>Bem vindo usuario!</p>
+        <p>Minhas viagens</p>
         <div className='m-2'>
-        <Button variant="success" onClick={handleShow}>Criar novo aeroporto</Button>
+        <Button variant="success" as={NavLink} to="/passagens">Comprar nova passagem</Button>
         </div>
-         <Form>
-          <InputGroup>
-          <Form.Control className='m-3' onChange={(e) => setSearch(e.target.value)} placeholder="Busque o aeroporto" />
-          </InputGroup>
-         </Form>
+   
 
         {/* <ReactBootStrap.Table></ReactBootStrap.Table> */}
-        <ReactBootStrap.Table striped bordered hover >
+        <ReactBootStrap.Table striped bordered hover className='text-center'>
       <thead>
         <tr>
           <th>id</th>
-          <th>estacao</th>
-          <th>avioes</th>
+          <th>Partida</th>
+          <th>Destino</th>
+          <th>Dia de Partida</th>
+          <th>Horario de partida</th>
+          <th>Dia de chegada</th>
+          <th>Horario de chegada</th>
+          <th>Valor</th>
         </tr>
       </thead>
       <tbody>
-        {aeroportos.filter((aeroporto)=>{
-          return search.toLowerCase() ===''? aeroporto: aeroporto.estacao.toLowerCase()
+        {voos.filter((voo)=>{
+          return search.toLowerCase() ===''? voo: voo.estacao.toLowerCase()
           .includes(search)
         })
         
-        .map(renderaeroportos)}
+        .map(rendervoos)}
      </tbody>
     </ReactBootStrap.Table>
        
@@ -152,4 +150,4 @@ return(
 
 }
 
-export default AdminAirports
+export default UserPage
