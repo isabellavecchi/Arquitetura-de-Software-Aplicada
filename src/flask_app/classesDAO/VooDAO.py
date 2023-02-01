@@ -18,18 +18,32 @@ class VooDAO:
         table = self.conectaBD.getTable(Flight)
         voos = []
         for rVoo in table:
-            voos.append(Voo(idVoo=rVoo.id, idAviao=rVoo.id_aviao, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco))
+            voos.append(Voo(idVoo=rVoo.id, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco))
         return voos
+    
+    # def getTbVooOrderByPreco(self):
+    #     try:
+    #         session = self.conectaBD.getSession()
+    #         table = session.query(Flight).order_by(Flight.preco)
+    #         voos = []
+    #         for rVoo in table:
+    #             voos.append(Voo(idVoo=rVoo.id, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco))
+    #         return voos
+
+        # except Exception as e:
+        #     print(e)
+        #     ret = {"status": str(e)}
+        #     logging.info(f'XABUUUUU ... {e}')
     
     def getVooById(self, idVoo):
         try:
             rVoo = self.conectaBD.getObjectById(Flight, idVoo)
-            return Voo(idVoo=rVoo.id, idAviao=rVoo.id_aviao, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco)
+            return Voo(idVoo=rVoo.id, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco)
 
         except Exception as e:
             print(e)
             ret = {"status": str(e)}
-            logging.info(f'XABUUUUU ... {e}')
+            logging.info(f'XABUUUUU ... ', e)
     
     def updateVooById(self, voo):
         self.conectaBD.updateObjectById(Flight, voo)

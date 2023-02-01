@@ -108,14 +108,14 @@ class Flight(Base):
     __tablename__ = 'tb_voo'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    id_aviao = Column(Integer, ForeignKey('tb_aviao.id'),
-                            nullable=False)
+    # id_aviao = Column(Integer, ForeignKey('tb_aviao.id'),
+    #                         nullable=False)
     qt_lugares_disponiveis = Column(Integer, default=0)
     data_saida = Column(DateTime, nullable=False)
-    id_aeroporto_saida = Column(Integer, ForeignKey('tb_aeroporto.id'),
+    id_aeroporto_saida = Column(Integer, ForeignKey('tb_aeroporto.id', ondelete='CASCADE'),
                                      nullable=False)
     data_chegada = Column(DateTime, nullable=False)
-    id_aeroporto_chegada = Column(Integer, ForeignKey('tb_aeroporto.id'),
+    id_aeroporto_chegada = Column(Integer, ForeignKey('tb_aeroporto.id', ondelete='CASCADE'),
                                      nullable=False)
     preco = Column(Float, default=0)
 
@@ -123,7 +123,7 @@ class Flight(Base):
         """Initialize the flight details"""
         if(voo.getId() is not None):
             self.id = voo.getId()
-        self.id_aviao = voo.getIdAviao()
+        # self.id_aviao = voo.getIdAviao()
         self.qt_lugares_disponiveis = voo.getQtLugaresDisponiveis()
         self.data_saida = voo.getDataDeSaida()
         self.id_aeroporto_saida = voo.getIdAeroportoSaida()
@@ -139,7 +139,7 @@ class Flight(Base):
         self.arrival_airport = self.get_arrival_airport()
         return {
             'id': self.id,
-            'id_aviao': self.id_aviao,
+            # 'id_aviao': self.id_aviao,
             'qt_lugares_disponiveis': self.qt_lugares_disponiveis,
             'data_saida': self.data_saida,
             'id_aeroporto_saida': self.id_aeroporto_saida,
@@ -163,7 +163,7 @@ class Booking(Base):
     __tablename__ = 'tb_passagem'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    id_voo = Column(Integer, ForeignKey('tb_voo.id'),
+    id_voo = Column(Integer, ForeignKey('tb_voo.id', ondelete='CASCADE'),
                             nullable=False)
     data_compra = Column(DateTime, default=datetime.datetime.now())
     nome_comprador = Column(String(256), nullable=False)
