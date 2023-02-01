@@ -36,3 +36,6 @@ class PassagemDAO:
     
     def deletePassagemByIDs(self, arrId):
         self.conectaBD.deleteObjectByIDs(Booking, arrId)
+    
+    # def listarPassagens(self):
+    #     self.conectaBD.getValuesFromQueryString('Select * from tb_passagem;')

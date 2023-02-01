@@ -1,7 +1,7 @@
 import json
 import re
 import logging
-import datetime
+from datetime import datetime
 import numpy as np
 
 # from Aviao import Aviao
@@ -9,11 +9,11 @@ import numpy as np
 
 class Voo:
     #construtor
-    def __init__(self, idVoo=None, idAviao=None, lugaresDisponiveis=None, dataDeSaida=None, idAeroportoSaida=None, dataDeChegada=None, idAeroportoChegada=None, preco=None):
+    def __init__(self, idVoo=None, lugaresDisponiveis=None, dataDeSaida=None, idAeroportoSaida=None, dataDeChegada=None, idAeroportoChegada=None, preco=None):
         try:
             self.idVoo = idVoo
 
-            self.idAviao = idAviao
+            # self.idAviao = idAviao
             self.lugaresDisponiveis = lugaresDisponiveis
 
             self.dataDeSaida = dataDeSaida
@@ -32,13 +32,15 @@ class Voo:
 
     def __iter__(self): #cria dicionario
         yield from{
-            "idVoo": self.idVoo,
-            "idAviao": self.idAviao,
-            "dataDeSaida": self.dataDeSaida,
-            "idAeroportoSaida": self.idAeroportoSaida,
-            "dataDeChegada": self.dataDeChegada,
-            "idAeroportoChegada": self.idAeroportoChegada,
-            "preco": self.preco
+            "id": self.idVoo if hasattr(self,'idVoo') else None,
+            "partida": self.idAeroportoSaida,
+            "destino": self.idAeroportoChegada,
+            "diaPartida": self.dataDeSaida.strftime("%d/%m/%Y"),
+            "horarioPartida": self.dataDeSaida.strftime("%H:%M"),
+            "diaChegada": self.dataDeChegada.strftime("%d/%m/%Y"),
+            "horarioChegada": self.dataDeChegada.strftime("%H:%M"),
+            "valor": self.preco,
+            "passagens": self.lugaresDisponiveis
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -47,13 +49,24 @@ class Voo:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Voo: %s\nidAviao: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\nPreco: %s\n' % (self.getId(),self.getIdAviao(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida(), self.getPreco())
+        return 'Voo: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\nPreco: %s\n' % (self.getId(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida(), self.getPreco())
     
     def printa(self):
         print(self.__repr__())
 
-    # def from_json(json_file):
-    #     return Voo(json.load(dict(json_file), ensure_ascii = False))
+    def from_json(json_file):
+        # convertendo as strings de data e hora para o formato datetime
+        strDtSaida = json_file['diaPartida'] + ' ' + json_file['horarioPartida']
+        strDtChegada = json_file['diaChegada'] + ' ' + json_file['horarioChegada']
+        dtSaida = datetime.strptime(strDtSaida, '%d/%m/%Y %H:%M')
+        dtChegada = datetime.strptime(strDtChegada, '%d/%m/%Y %H:%M')
+
+        if "id" in json_file:
+            return Voo(idVoo=json_file['id'], lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
+                dataDeChegada=dtChegada, idAeroportoChegada=json_file['destino']['id'], preco=json_file['valor'])
+        else:
+            return Voo(lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
+                dataDeChegada=dtChegada, idAeroportoChegada=json_file['destino']['id'], preco=json_file['valor'])
 
     def to_json(self):
         return self.__str__()
@@ -67,12 +80,6 @@ class Voo:
     
     def getId(self):
         return self.idVoo
-
-    def setIdAviao(self,idAviao):
-        self.idAviao = idAviao
-    
-    def getIdAviao(self):
-        return self.idAviao
             
     def setQtLugaresDisponiveis(self, lugaresDisponiveis):
         self.lugaresDisponiveis = lugaresDisponiveis
@@ -96,13 +103,13 @@ class Voo:
         self.dataDeChegada = dataDeChegada
     
     def getDataDeChegada(self):
-        return self.dataDeSaida
+        return self.dataDeChegada
             
-    def setIdAeroportoSaida(self, idAeroportoSaida):
-        self.idAeroportoSaida = idAeroportoSaida
+    def setIdAeroportoChegada(self, idAeroportoChegada):
+        self.idAeroportoChegada = idAeroportoChegada
     
-    def getIdAeroportoSaida(self):
-        return self.idAeroportoSaida
+    def getIdAeroportoChegada(self):
+        return self.idAeroportoChegada
             
     def setPreco(self, preco):
         self.preco = preco

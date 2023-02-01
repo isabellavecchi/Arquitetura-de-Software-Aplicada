@@ -20,6 +20,7 @@ class Usuario:
 
     def __iter__(self): #cria dicionario
         yield from{
+            "id": self.id if hasattr(self,'idUsuario') else None,
             "nome": self.nome,
             "email": self.email,
             "senha": self.senha
@@ -36,8 +37,11 @@ class Usuario:
     def printa(self):
         print(self.__repr__())
 
-    # def from_json(json_file):
-    #     return Usuario(json.load(dict(json_file), ensure_ascii = False))
+    def from_json(json_file):
+        if "id" in json_file:
+            return Usuario(idUsuario=json_file["id"], nome=json_file["nome"], email=json_file["email"], senha=json_file["senha"])
+        else:
+            return Usuario(nome=json_file["nome"], email=json_file["email"], senha=json_file["senha"])
 
     def to_json(self):
         return self.__str__()

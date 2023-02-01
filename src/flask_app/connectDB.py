@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import select, update, func, null, insert
+from sqlalchemy import select, update, func, null, insert, text
+from sqlalchemy.engine import result
 from models import Base
 import logging
 
@@ -61,6 +62,7 @@ class ConectaBD:
     
 
     ###################### CRUD ######################
+
     def addObjectInTable(self, object, Table):
         try:
             row = Table(object)
@@ -90,7 +92,7 @@ class ConectaBD:
 
         except Exception as e:
             logging.warning(f'XABUUUUU adicionando por input... ', e)
-    
+
     def getTable(self, Table):
         try:
             session = self.getSession()
@@ -101,6 +103,18 @@ class ConectaBD:
             print(e)
             ret = {"status": str(e)}
             logging.info(f'XABUUUUU ... {e}')
+    
+    # def getAllObjectsOrderedByColumn(self, Table, column):
+    #     try:
+    #         session = self.getSession()
+    #         table = session.query(Table).order_by(column)
+    #         return table
+
+    #     except Exception as e:
+    #         print(e)
+    #         ret = {"status": str(e)}
+    #         logging.info(f'XABUUUUU ... {e}')
+
 
     def getObjectById(self, Table, idObject):
         try:
@@ -134,3 +148,10 @@ class ConectaBD:
         session = self.getSession()
         session.query(Table).filter(Table.id.in_(idArray)).delete()
         session.commit()
+
+    # def getValuesFromQueryString(self, str):
+    #     sql = text(str)
+    #     # conn = self.getConnection()
+    #     result_set = ConectaBD.engine.execute(str)  
+    #     for r in result_set:  
+    #         print(r)
