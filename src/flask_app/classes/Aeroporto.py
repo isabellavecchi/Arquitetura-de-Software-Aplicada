@@ -19,10 +19,10 @@ class Aeroporto:
 
     def __iter__(self): #cria dicionario
         yield from{
-            "idAeroporto": self.idAeroporto,
-            "nome": self.nome,
-            "estado": self.estado,
-            "cidade": self.cidade
+            "id": self.idAeroporto if hasattr(self,'idAeroporto') else None,
+            "nomeAeroporto": self.nome,
+            "cidade": self.cidade,
+            "estado": self.estado
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -36,8 +36,11 @@ class Aeroporto:
     def printa(self):
         print(self.__repr__())
 
-    # def from_json(json_file):
-    #     return Aeroporto(json.load(dict(json_file), ensure_ascii = False))
+    def from_json(json_file):
+        if "id" in json_file:
+            return Aeroporto(idAeroporto=json_file["id"], nome=json_file["nomeAeroporto"], estado=json_file["estado"], cidade=json_file["cidade"])
+        else:
+            return Aeroporto(nome=json_file["nomeAeroporto"], estado=json_file["estado"], cidade=json_file["cidade"])
 
     def to_json(self):
         return self.__str__()

@@ -20,7 +20,6 @@ vooDAO = VooDAO(conectaBD)
 passagemDAO = PassagemDAO(conectaBD)
 
 ## TESTES AVIAO
-''' 
 aviao = Aviao(idAviao="7", qtTotalAssentos=30)
 print(aviao.__repr__())
 aviaoDAO.insertAviao(aviao)
@@ -28,6 +27,7 @@ aviaoDAO.insertAviao(aviao)
 aviao = Aviao(qtTotalAssentos=30)
 print(aviao.__repr__())
 aviaoDAO.insertAviao(aviao)
+''' 
 
 print(aviao.to_json())
 
@@ -56,7 +56,7 @@ for aviao in avioes:
 ''' 
 
 ## TESTES USUARIO
-''' user = Usuario(nome="Usuario cinco", email="usuario5@ufu.br", senha="12412312523" )
+user = Usuario(nome="Usuario cinco", email="usuario5@ufu.br", senha="12412312523" )
 print(user.__repr__())
 
 usuarioDAO.addUsuario(user)
@@ -74,6 +74,7 @@ print(usuario2.__repr__())
 arrUsuario.append(usuario2)
 usuarioDAO.addListUsuarios(arrUsuario)
 # print("depois de add a lista tb")
+''' 
 
 
 arrUsuario = usuarioDAO.getAllUsers()
@@ -89,7 +90,6 @@ qtd = usuarioDAO.getQtdUser()
 print(qtd) '''
  
 ## TESTES AEROPORTO
-''' 
 aeroporto = Aeroporto(idAeroporto="203", nome = "garulhos", estado="Brasil", cidade="Sao Paulo")
 print(aeroporto.__repr__()) 
 
@@ -98,6 +98,7 @@ aeroportoDAO.insertAeroporto(aeroporto)
 aeroporto = Aeroporto(nome = "garulhos", estado="Brasil", cidade="Sao Paulo")
 print(aeroporto.__repr__())
 aeroportoDAO.insertAeroporto(aeroporto)
+''' 
 
 print(aeroporto.to_json())
 
@@ -125,20 +126,18 @@ for aeroporto in avioes:
     print(aeroporto)
 ''' 
 
-## TESTES AEROPORTO
-''' voo = Voo(idVoo="1", qtAssentosEconomicos=3, qtAssentosExecutivos=5)
-print(voo.__repr__())
+## TESTES VOO
 
-voo = Voo(idVoo=14, idAviao=1, lugaresDisponiveis=20, dataDeSaida="02-02-2023", idAeroportoSaida=3, dataDeChegada="04-05-2023", idAeroportoChegada=2, preco=218.00)
+voo = Voo(idVoo=14, lugaresDisponiveis=20, dataDeSaida="02-02-2023", idAeroportoSaida=203, dataDeChegada="04-05-2023", idAeroportoChegada=2, preco=218.00)
 print(voo.__repr__()) 
 
 vooDAO.insertVoo(voo)
 
-voo = Voo(idAviao=1, lugaresDisponiveis=20, dataDeSaida="02-02-2023", idAeroportoSaida=3, dataDeChegada="04-05-2023", idAeroportoChegada=2, preco=218.00)
+voo = Voo(lugaresDisponiveis=20, dataDeSaida="02-02-2023", idAeroportoSaida=203, dataDeChegada="04-05-2023", idAeroportoChegada=2, preco=218.00)
 print(voo.__repr__())
 vooDAO.insertVoo(voo)
-
 print(voo.to_json())
+'''
 
 voos = vooDAO.getTbVoo();
 for voo in voos:
@@ -165,16 +164,15 @@ for voo in voos:
 '''
 
 ## TESTES PASSAGEM
-'''
+# passagem = Passagem(idPassagem=5, idVoo=3, nomeComprador="Augusto", cpfComprador="12312345678")
+# print(passagem.__repr__())
+# passagemDAO.insertPassagem(passagem)
 
-passagem = Passagem(idPassagem=5, idVoo=1, nomeComprador="Augusto", cpfComprador="12312345678")
-print(passagem.__repr__())
-passagemDAO.insertPassagem(passagem)
-
-passagem = Passagem(idVoo=1, nomeComprador="Isabella", cpfComprador="05155425123")
+passagem = Passagem(idVoo=14, nomeComprador="Isabella", cpfComprador="05155425123")
 print(passagem.__repr__()) 
-
 passagemDAO.insertPassagem(passagem)
+
+'''
 
 print(passagem.to_json())
 

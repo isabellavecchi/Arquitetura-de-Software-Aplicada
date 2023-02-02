@@ -20,10 +20,10 @@ class Passagem:
 
     def __iter__(self): #cria dicionario
         yield from{
-            "idPassagem": self.idPassagem,
-            "idVoo": self.idVoo,
-            "nomeComprador": self.nomeComprador,
-            "cpfComprador": self.cpfComprador
+            "id": self.idPassagem if hasattr(self,'idPassagem') else None,
+            "nomePassageiro": self.nomeComprador,
+            "cpf": self.cpfComprador,
+            "viagem": self.idVoo
         }.items()
     
     #envia uma estrutura em formato de dicionário (dict interage com o método iter)
@@ -37,8 +37,11 @@ class Passagem:
     def printa(self):
         print(self.__repr__())
 
-    # def from_json(json_file):
-    #     return Passagem(json.load(dict(json_file), ensure_ascii = False))
+    def from_json(json_file):
+        if "id" in json_file:
+            return Passagem(idPassagem=json_file["id"], idVoo=json_file["viagem"], nomeComprador=json_file["nomePassageiro"],cpfComprador=json_file["cpf"])
+        else:
+            return Passagem(idVoo=json_file["viagem"], nomeComprador=json_file["nomePassageiro"],cpfComprador=json_file["cpf"])
 
     def to_json(self):
         return self.__str__()
