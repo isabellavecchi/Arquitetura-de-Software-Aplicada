@@ -18,17 +18,12 @@ export const passagens = [
   {id:"4",nomePassageiro:"Augusto", cpf:"augusto@hotmail.com", viagem:"São Paulo -> Uberlândia 21/07/2023"}
 ]
 
-<<<<<<< Updated upstream:frontend/src/components/AdminPassagens.js
 
 
 
 
 
 export const RenderPassagens = (Passagens, index) => {
-=======
-export const RenderClientes = (clients, index) => {
-  const [lgShow, setLgShow] = useState(false);
->>>>>>> Stashed changes:frontend/src/components/AdminClients.js
   
   // const [lgShow, setLgShow] = useState(false);
   return(
@@ -153,11 +148,7 @@ return(
           .includes(search)
         })
         
-<<<<<<< Updated upstream:frontend/src/components/AdminPassagens.js
         .map(RenderPassagens)}
-=======
-        .map(RenderClientes)}
->>>>>>> Stashed changes:frontend/src/components/AdminClients.js
      </tbody>
     </ReactBootStrap.Table>
        

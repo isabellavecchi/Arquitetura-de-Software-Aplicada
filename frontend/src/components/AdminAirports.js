@@ -15,14 +15,8 @@ export const aeroportos = [
   {id:"4",nomeAeroporto:"santos drumond",cidade:"sao paulo", estado:"SP"}
 ]
 
-<<<<<<< Updated upstream
-
-export function RenderAeroportoss (aeroporto, index) {
-  // const [lgShow, setLgShow] = useState(false);
-=======
 export const RenderAeroportos = (aeroporto, index) => {
-  const [lgShow, setLgShow] = useState(false);
->>>>>>> Stashed changes
+  // const [lgShow, setLgShow] = useState(false);
   return(
     <>
       <tr key={index}>
@@ -145,11 +139,7 @@ return(
           
         })
         
-<<<<<<< Updated upstream
-        .map(RenderAeroportoss)}
-=======
         .map(RenderAeroportos)}
->>>>>>> Stashed changes
      </tbody>
     </ReactBootStrap.Table>
        

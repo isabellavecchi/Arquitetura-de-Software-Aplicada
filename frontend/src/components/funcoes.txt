@@ -13,3 +13,6 @@ PUT não será necessário
 GET aeroportos.json para pegar os aeroportos 
 POST aeroportos.json pra criar um novo aeroporto
 PUT não será necessário
+
+Post login
+Post Cadastro
