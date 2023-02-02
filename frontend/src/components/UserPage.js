@@ -9,7 +9,11 @@
 // import {NavLink } from 'react-router-dom';
 // import { voos } from './AdminTickets';
 
+<<<<<<< Updated upstream
 // export function RenderVoos (voo, index) {
+=======
+// export function rendervoos (voo, index) {
+>>>>>>> Stashed changes
 //   const [lgShow, setLgShow] = useState(false);
 //   return(
 //     <>
@@ -109,7 +113,11 @@
 //           .includes(search)
 //         })
         
+<<<<<<< Updated upstream
 //         .map(RenderVoos)}
+=======
+//         .map(rendervoos)}
+>>>>>>> Stashed changes
 //      </tbody>
 //     </ReactBootStrap.Table>
        

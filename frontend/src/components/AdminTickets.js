@@ -16,6 +16,7 @@ export const voos = [
   {id:"4",partida:"uberlandia", destino:"bahia", diaPartida:"21/07/2023", horarioPartida:"9:00",diaChegada:"25/11/2023",horarioChegada:"19:00", valor:"650,00" ,passagens:"25"}
 ]
 
+<<<<<<< Updated upstream
 // function handleClick() {
     
 //   // Send data to the backend via POST
@@ -59,6 +60,11 @@ const AdminTickets=()=>{
   const handleShow3 = () => setShow3(true);
  const RenderVoos = (voo, index) => {
 
+=======
+
+export const RenderVoos = (voo, index) =>{
+  const [lgShow, setLgShow] = useState(false);
+>>>>>>> Stashed changes
   return(
     <>
       <tr key={index}>
