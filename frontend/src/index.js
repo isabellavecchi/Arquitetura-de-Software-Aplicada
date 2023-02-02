@@ -28,7 +28,7 @@ const App=()=>{
             {/* <Route path="/passagens" element={<Passagens />} /> */}
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/adminT" element={<AdminTickets />} />
-            <Route path="/adminC" element={<AdminPassagens />} />
+            <Route path="/adminP" element={<AdminPassagens />} />
             <Route path="/adminA" element={<AdminAirports />} />
             {/* <Route path="/userP" element={<UserPage />} /> */}
             </Routes>

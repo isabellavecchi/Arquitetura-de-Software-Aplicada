@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
@@ -7,7 +7,10 @@ import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { aeroportos } from './AdminAirports';
-import { passagens } from './AdminPassagens';
+
+
+
+
 
 export const voos = [
   {id:"1",partida:"uberlandia", destino:"sao paulo", diaPartida:"22/07/2023", horarioPartida:"19:00",diaChegada:"25/11/2023", horarioChegada:"19:00", valor:"250,00" ,passagens:"25"},
@@ -37,17 +40,12 @@ export const voos = [
    return(
       <option value={aeroporto.id}> Aeroporto : {aeroporto.nomeAeroporto} em {aeroporto.cidade} - {aeroporto.estado}   </option>
       )
-
  }
   export const RenderVoosSelect = (voo, index) => {
    return(
    
    <option value={voo.id}>De {voo.partida} à {voo.destino} no dia: {voo.dia} as {voo.horario} por {voo.valor}   </option>
-    
-   
-
    )
-
  }
 
 
@@ -57,7 +55,9 @@ const AdminTickets=()=>{
   const [show3, setShow3] = useState(false); //modal
   const handleClose3 = () => setShow3(false);
   const handleShow3 = () => setShow3(true);
- const RenderVoos = (voo, index) => {
+  const [voo,setVoos] = useState()
+  
+  const RenderVoos = (voo, index) => {
 
   return(
     <>
@@ -150,9 +150,9 @@ const AdminTickets=()=>{
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
 
-  const [search, setSearch] = useState("");
-
-
+  const [search, setSearch] = useState(""); //pesquisa
+  
+  
   // const [voos, setvoos] = useState({
   //   id:0,
   //   partida: "",
@@ -186,6 +186,7 @@ const AdminTickets=()=>{
   //   );
   // }, []);
   
+
 
   
 return(
