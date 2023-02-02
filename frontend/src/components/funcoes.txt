@@ -1,0 +1,15 @@
+OK quando o usuário for criar um novo voo nas opções de partida e destino fazer um select de aeroportos.json 
+
+OK/2 criar botão vender passagem na tela AdminTickets onde o vendedor 
+   colocaria o nome e o cpf de quem comprou e enviar id do voo nome e cpf do passageiro 
+
+GET voos.json para pegar os voos já criaram
+POST voos.json para criar novo voo
+PUT voos.json para atualizar um voo
+
+GET passagens.json para pegar as passagens já vendidas e mostrar na tela administrar passagens 
+PUT não será necessário
+
+GET aeroportos.json para pegar os aeroportos 
+POST aeroportos.json pra criar um novo aeroporto
+PUT não será necessário

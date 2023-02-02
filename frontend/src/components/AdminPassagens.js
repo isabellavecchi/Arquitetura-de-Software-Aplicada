@@ -1,43 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState,  useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
-import { FaPen } from "react-icons/fa";
+// import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
 import Modal from 'react-bootstrap/Modal';
 import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
-
-export const clientss = [
-  {id:"1",usuario:"Joao", email:"joao@mail.com", viagens:"São Paulo -> Uberlândia no dia 22/07/2023"},
-  {id:"2",usuario:"Maria", email:"maria@bol.com", viagens:"Uberlândia -> São Paulo 24/07/2023"},
-  {id:"3",usuario:"Isabella", email:"isabella@yahoo.com", viagens:"São Paulo -> Uberlândia 21/07/2023"},
-  {id:"4",usuario:"Augusto", email:"augusto@hotmail.com", viagens:"São Paulo -> Uberlândia 21/07/2023"}
+//mudar o nome de passagenss para passagens
+export const passagens = [
+  //voos.json =  {id:"1",partida:"uberlandia", destino:"sao paulo", diaPartida:"22/07/2023", horarioPartida:"19:00",diaChegada:"25/11/2023", horarioChegada:"19:00", valor:"250,00"}
+  //mas não será incluso a quantidade de passagens no json
+  //{id:"1",nomePassageiro:"Joao", cpf:"1111111111", viagem:{voos.json}},
+  {id:"1",nomePassageiro:"Joao", cpf:"111111111", viagem:"Uberlândia -> São Paulo 24/07/2023"},
+  {id:"2",nomePassageiro:"Maria", cpf:"maria@bol.com", viagem:"Uberlândia -> São Paulo 24/07/2023"},
+  {id:"3",nomePassageiro:"Isabella", cpf:"isabella@yahoo.com", viagem:"São Paulo -> Uberlândia 21/07/2023"},
+  {id:"4",nomePassageiro:"Augusto", cpf:"augusto@hotmail.com", viagem:"São Paulo -> Uberlândia 21/07/2023"}
 ]
 
-export function renderClientes (clients, index) {
-  const [lgShow, setLgShow] = useState(false);
+
+
+
+
+
+export const RenderPassagens = (Passagens, index) => {
   
+  // const [lgShow, setLgShow] = useState(false);
   return(
- 
-    
-    <>
+   <>
    
     
       <tr key={index}>
-      <td>{clients.id}</td>
-      <td>{clients.usuario}</td>
-      <td>{clients.email}</td>
-      <td>{clients.viagens}</td>
+      <td>{Passagens.id}</td>
+      <td>{Passagens.nomePassageiro}</td>
+      <td>{Passagens.cpf}</td>
+      <td>{Passagens.viagem}</td>
       <td> 
-        <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button>
+        {/* <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button> */}
         <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
         </td>
     </tr>
       <Modal
         size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
+        // show={lgShow}
+        // onHide={() => setLgShow(false)}
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
@@ -47,22 +53,22 @@ export function renderClientes (clients, index) {
         </Modal.Header>
         <Modal.Body>
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail" >
-        <Form.Label>Nome atual ({clients.usuario})</Form.Label>
-        <Form.Control type="text" placeholder="novo nome de usuario"  />
+      <Form.Group className="mb-3" controlId="formBasiccpf" >
+        <Form.Label>Nome atual ({Passagens.nomePassageiro})</Form.Label>
+        <Form.Control type="text" placeholder="novo nome de nomePassageiro"  />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Email atual ({(clients.email)})</Form.Label>
-        <Form.Control type="text" placeholder="novo email para o usuario" />
+        <Form.Label>cpf atual ({(Passagens.cpf)})</Form.Label>
+        <Form.Control type="text" placeholder="novo cpf para o nomePassageiro" />
       </Form.Group>
 
  
     </Form>
           <Modal.Footer>
-          <Button variant="secondary" onClick={() => setLgShow(false)} >
+          {/* <Button variant="secondary" onClick={() => setLgShow(false)} >
             Cancelar
-          </Button>
+          </Button> */}
           <Button variant="primary" >
             Salvar alterações
           </Button>
@@ -82,24 +88,46 @@ export function renderClientes (clients, index) {
 
 
 const AdminTickets=()=>{
-
+  const [search, setSearch] = useState("");
   const [show, setShow] = useState(false); //modal
+  
   const handleClose = () => setShow(false);
+  
 
+//   const [passagens, setpassagens] = useState({
+//     id:0,
+//     nomePassageiro: "",
+//     cpf: "",
+//     viagem: "",
+   
+//   });
 
+//   useEffect(() => {
+//     // Usando fetch para pegar os dados do endpoint do flask
+//     fetch("/passagens").then((res) =>
+//         res.json().then((passagens) => {
+//             // seta os valores da api
+//             setpassagens({
+//                 id: passagens.id,
+//                 nomePassageiro: passagens.nomePassageiro,
+//                 cpf: passagens.cpf,
+//                 viagem: passagens.viagem,
+//             });
+//         })
+//     );
+// }, []);
 
-
-  const [search, setSearch] = useState("")
   
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
         <p>Admin</p>
         
-        <p>Lista de usuarios</p>
+        <p>Lista de passagens por nome do Passageiro</p>
 
          <Form>
           <InputGroup>
           <Form.Control className='m-3' onChange={(e) => setSearch(e.target.value)} placeholder="Busque o aeroporto" />
+            
           </InputGroup>
          </Form>
 
@@ -109,18 +137,18 @@ return(
         <tr>
           <th>id</th>
           <th>Cliente</th>
-          <th>Email</th>
-          <th>Viagens</th>
+          <th>cpf</th>
+          <th>viagem</th>
           <th>Editar</th>
         </tr>
       </thead>
       <tbody>
-        {clientss.filter((clients)=>{
-          return search.toLowerCase() ===''? clients: clients.usuario.toLowerCase()
+        {passagens.filter((Passagens)=>{
+          return search.toLowerCase() ===''? Passagens: Passagens.nomePassageiro.toLowerCase()
           .includes(search)
         })
         
-        .map(renderClientes)}
+        .map(RenderPassagens)}
      </tbody>
     </ReactBootStrap.Table>
        
@@ -131,14 +159,14 @@ return(
         <Modal.Body>
 
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" controlId="formBasiccpf">
         <Form.Label>cliente</Form.Label>
         <Form.Control type="text" placeholder="cliente" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>email</Form.Label>
-        <Form.Control type="text" placeholder="email" />
+        <Form.Label>cpf</Form.Label>
+        <Form.Control type="text" placeholder="cpf" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">

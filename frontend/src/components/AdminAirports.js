@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import { FaPen } from "react-icons/fa";
+// import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
 import Modal from 'react-bootstrap/Modal';
 import { InputGroup } from 'react-bootstrap';
@@ -9,29 +9,31 @@ import Form from 'react-bootstrap/Form';
 
 
 export const aeroportos = [
-  {id:"1",estacao:"uberlandia", avioes:"15"},
-  {id:"2",estacao:"sao paulo", avioes:"14"},
-  {id:"3",estacao:"belo horizonte", avioes:"12"},
-  {id:"4",estacao:"bahia", avioes:"10"}
+  {id:"1",nomeAeroporto:"congonhas",cidade:"uberlandia", estado:"MG"},
+  {id:"2",nomeAeroporto:"jaci de assis",cidade:"rio de janeiro", estado:"RJ"},
+  {id:"3",nomeAeroporto:"getulio vargas",cidade:"Pirapora", estado:"MG"},
+  {id:"4",nomeAeroporto:"santos drumond",cidade:"sao paulo", estado:"SP"}
 ]
 
-export function renderaeroportos (aeroporto, index) {
-  const [lgShow, setLgShow] = useState(false);
+
+export function RenderAeroportoss (aeroporto, index) {
+  // const [lgShow, setLgShow] = useState(false);
   return(
     <>
       <tr key={index}>
       <td>{aeroporto.id}</td>
-      <td>{aeroporto.estacao}</td>
-      <td>{aeroporto.avioes}</td>
+      <td>{aeroporto.nomeAeroporto}</td>
+      <td>{aeroporto.cidade}</td>
+      <td>{aeroporto.estado}</td>
       <td> 
-        <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button>
+        {/* <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button> */}
         <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
         </td>
     </tr>
     <Modal
         size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
+        // show={lgShow}
+        // onHide={() => setLgShow(false)}
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
@@ -57,9 +59,9 @@ export function renderaeroportos (aeroporto, index) {
  
     </Form>
           <Modal.Footer>
-          <Button variant="secondary" onClick={() => setLgShow(false)} >
+          {/* <Button variant="secondary" onClick={() => setLgShow(false)} >
             Cancelar
-          </Button>
+          </Button> */}
           <Button variant="primary" >
             Salvar alterações
           </Button>
@@ -81,6 +83,29 @@ const AdminAirports=()=>{
   const handleShow = () => setShow(true);
 
   const [search, setSearch] = useState("")
+
+  // const [aeroportos, setaeroportos] = useState({
+  //   id:0,
+  //   nomeAeroporto: "",
+  //   cidade: "",
+  //   estado: "",
+   
+  // });
+  
+  // useEffect(() => {
+  //   // Usando fetch para pegar os dados do endpoint do flask
+  //   fetch("/aeroportos").then((res) =>
+  //       res.json().then((aeroportos) => {
+  //           // seta os valores da api
+  //           setaeroportos({
+  //               id: aeroportos.id,
+  //               nomeAeroporto: aeroportos.nomeAeroporto,
+  //               cpf: aeroportos.cpf,
+  //               viagem: aeroportos.viagem,
+  //           });
+  //       })
+  //   );
+  // }, []);
   
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
@@ -101,23 +126,27 @@ return(
       <thead>
         <tr>
           <th>id</th>
-          <th>estacao</th>
-          <th>avioes</th>
+          <th>Nome do aeroporto</th>
+          <th>Cidade</th>
+          <th>Estado</th>
+          <th>Excluir aeroporto</th>
         </tr>
       </thead>
       <tbody>
+        
         {aeroportos.filter((aeroporto)=>{
-          return search.toLowerCase() ===''? aeroporto: aeroporto.estacao.toLowerCase()
+          return search.toLowerCase() ===''? aeroporto: aeroporto.nomeAeroporto.toLowerCase()
           .includes(search)
+          
         })
         
-        .map(renderaeroportos)}
+        .map(RenderAeroportoss)}
      </tbody>
     </ReactBootStrap.Table>
        
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Novo Trajeto</Modal.Title>
+          <Modal.Title>Novo Aeroporto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 

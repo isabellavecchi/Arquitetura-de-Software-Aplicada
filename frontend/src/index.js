@@ -6,10 +6,10 @@ import Home from './components/Home';
 import AdminTickets from './components/AdminTickets';
 import Cadastro from './components/Cadastro';
 import Login from './components/Login';
-import Passagens from './components/Passagens';
-import AdminClients from './components/AdminClients';
+// import Passagens from './components/Passagens';
+import AdminPassagens from './components/AdminPassagens';
 import AdminAirports from './components/AdminAirports';
-import UserPage from './components/UserPage';
+// import UserPage from './components/UserPage';
 import './styles/styles.css';
 
 import{BrowserRouter as Router,Routes,Route} from 'react-router-dom'
@@ -24,14 +24,13 @@ const App=()=>{
            
             <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/produtos" element={<Cadastro />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/passagens" element={<Passagens />} />
+            {/* <Route path="/passagens" element={<Passagens />} /> */}
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/adminT" element={<AdminTickets />} />
-            <Route path="/adminC" element={<AdminClients />} />
+            <Route path="/adminC" element={<AdminPassagens />} />
             <Route path="/adminA" element={<AdminAirports />} />
-            <Route path="/userP" element={<UserPage />} />
+            {/* <Route path="/userP" element={<UserPage />} /> */}
             </Routes>
 
         </div>

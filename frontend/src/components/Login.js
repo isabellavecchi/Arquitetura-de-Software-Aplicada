@@ -10,12 +10,12 @@ return(
          
         
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicLogin">
+      <Form.Group className="mb-3" controlId="email">
         <Form.Label>Usuario</Form.Label>
-        <Form.Control type="text" placeholder="Entre com seu usuario" />
+        <Form.Control type="text" placeholder="Entre com seu email" />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="senha">
         <Form.Label>Senha</Form.Label>
         <Form.Control type="password" placeholder="Senha" />
       </Form.Group>
