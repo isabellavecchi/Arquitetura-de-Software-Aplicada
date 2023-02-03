@@ -21,22 +21,9 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__, template_folder='templates')
 
 @app.route('/', methods=['GET','POST'])
-def notas():
-    
-    if request.method == 'POST':
-        print('###########routes')
-        objeto = request.json
-        print('objeto: ', objeto)
+def notas():    
+    return funcApp.listarPassagens()
 
-        objeto = funcApp.criarVoo(objeto)
-        print('###########depois de criar o objeto')
-        # print('objeto: ', objeto)
-
-        if objeto is None:
-            return jsonify({"msg":"objeto nao cadastrado"})
-        return jsonify({"msg":"objeto cadastrado"})
-    else:
-        return jsonify({"msg":"objeto nao cadastrado"})
 
 
 
@@ -110,6 +97,12 @@ funcApp = AppFunctions(db)
 #                 {"access_token":access_token,"refresh_token":refresh_token}
 #             )
 
+
+    #######################
+    ##      INSERTS      ##
+    #######################
+
+    ## Usuario
 @app.route('/usuario', methods=['POST','GET'])
 def usuario():
     
@@ -124,7 +117,7 @@ def usuario():
     else:
         return jsonify({"msg":"usuario nao cadastrado"})
 
-
+    ## Aeroporto
 @app.route('/aeroporto', methods=['POST','GET'])
 def aeroporto():
     
@@ -140,7 +133,7 @@ def aeroporto():
     else:
         return jsonify({"msg":"aeroporto nao cadastrado"})
 
-
+    ## Voo
 @app.route('/voo', methods=['POST','GET'])
 def voo():
     
@@ -155,12 +148,79 @@ def voo():
         return jsonify({"msg":"voo cadastrado"})
     else:
         return jsonify({"msg":"voo nao cadastrado"})
+
+    ## Passagem
+@app.route('/passagem', methods=['POST','GET'])
+def passagem():
     
-# @app.route('/aeroportos'):
-# # class Aeroportos(Resource):
-# def post(self):
-#     return funcApp.listarAeroportos()
-# post()
+    if request.method == 'POST':
+        passagem = request.json
+        logging.info('passagem: ', passagem)
+        passagem = funcApp.venderPassagem(passagem)
+
+        if passagem is None:
+            return jsonify({"msg":"passagem nao cadastrado"})
+        return jsonify({"msg":"passagem cadastrado"})
+    else:
+        return jsonify({"msg":"passagem nao cadastrado"})
+    
+
+    ########################
+    ##        GETS        ##
+    ########################
+
+    ## Aeroportos
+@app.route('/listarAeroportos', methods=['GET'])
+def listarAeroportos():
+    return funcApp.listarPassagens()
+
+    ## Voos
+@app.route('/listarVoos', methods=['GET'])
+def listarVoos():
+    return funcApp.listarVoos()
+
+    ## Voos - Disponiveis
+@app.route('/listarVoosDisponiveis', methods=['GET'])
+def listarVoosDisponiveis():
+    return funcApp.listarVoosDisponiveis()
+
+    ## Passagens
+@app.route('/listarPassagens', methods=['GET'])
+def listarPassagens():
+    return funcApp.listarPassagens()
+    
+
+    #######################
+    ##      DELETES      ##
+    #######################
+
+    ## Aeroporto
+@app.route('/aeroportos/deletar/id', methods=['GET'])
+def deletePassagem():
+    id = request.json
+    logging.info('id: ', voo)
+
+    if(funcApp.deletePassagem(id)):
+        return jsonify({"msg":"passagem deletada com sucesso!"})
+    return jsonify({"msg":"xabu ao deletar passagem..."})
+    
+
+    #######################
+    ##      UPDATES      ##
+    #######################
+
+    ## Voo
+@app.route('/voos/atualiza/id', methods=['GET'])
+def updateVoo():
+    
+    id = request.json
+    logging.info('id: ', voo)
+    voo = funcApp.updateVoo(id)
+
+    if passagem is None:
+        return jsonify({"msg":"erro ao atualizar passagem..."})
+    return jsonify({"msg":"passagem atualizada com sucesso!!"})
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

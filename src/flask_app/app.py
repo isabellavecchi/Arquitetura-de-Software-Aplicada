@@ -84,12 +84,7 @@ class AppFunctions():
     # criarAeroporto(aeroporto2)
 
     def criarVoo(self, json_voo):
-        print('########### app criarVoo')
-        print('voo.json: ', json_voo)
-        print('############################# AQUI')
-
         voo = Voo.from_json(json_voo)
-        print('voo: ',voo)
         return self.vooDAO.insertVoo(voo)
 
     ''' Aqui precisa vir o aeroporto inteiro... então talvez seja mais fácil padronizar '''
@@ -101,7 +96,13 @@ class AppFunctions():
     # criarVoo(json_voo2)
 
     def venderPassagem(self, novaPassagem_json):
+        print('########### app criarVoo')
+        print('voo.json: ', novaPassagem_json)
+
+        # print('############################# AQUI')
         passagem = Passagem.from_json(novaPassagem_json)
+        print('passagem: ',passagem)
+
         return self.passagemDAO.insertPassagem(passagem)
 
     ''' Aqui onde era o idVoo, se pá a gente pode sempre chamar de "viagem", pq senão quebra o dicionário '''
@@ -118,9 +119,8 @@ class AppFunctions():
         # deixando um lugar disponivel no voo
         voo.setQtLugaresDisponiveis(voo.getQtLugaresDisponiveis() + 1)
         self.vooDAO.updateVooById(voo)
-        self.passagemDAO.deletePassagemByIDs([idPassagem])
+        return self.passagemDAO.deletePassagemByIDs([idPassagem])
 
-        return
 
     # deletePassagem(2)
 
@@ -155,14 +155,14 @@ class AppFunctions():
     def updateVoo(self, json_voo):
         voo = Voo.from_json(json_voo)
         
-        print("################### aap.py from json ################")
-        print("voo",voo)
-        voo = self.vooDAO.updateVooById(voo)
+        # print("################### aap.py from json ################")
+        # print("voo",voo)
+        return self.vooDAO.updateVooById(voo)
         
-        print("################### aap.py updateid ################")
-        print("voo",voo)
+        # print("################### aap.py updateid ################")
+        # print("voo",voo)
 
-        return
+        
 
     ''' No aeroporto não faz diferença se tá só a id ou se tá o object inteiro. É só 1 linha que se altera,
         mas daí preciso saber certinho como ele vai vir '''
