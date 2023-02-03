@@ -11,7 +11,10 @@ class VooDAO:
         self.conectaBD = conectaBD
     
     def insertVoo(self, voo):
-        self.conectaBD.addObjectInTable(voo, Flight)
+        print('########### vooDAO insertVoo')
+        print('voo', voo)
+        voo = self.conectaBD.addObjectInTable(voo, Flight)
+        # print('vooResult', voo)
         return voo
     
     def getTbVoo(self):

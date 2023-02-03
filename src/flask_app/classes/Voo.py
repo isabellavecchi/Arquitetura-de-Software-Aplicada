@@ -55,6 +55,8 @@ class Voo:
         print(self.__repr__())
 
     def from_json(json_file):
+        print('########### voo from_json')
+        print('voo: ', json_file)
         # convertendo as strings de data e hora para o formato datetime
         strDtSaida = json_file['diaPartida'] + ' ' + json_file['horarioPartida']
         strDtChegada = json_file['diaChegada'] + ' ' + json_file['horarioChegada']
@@ -62,11 +64,17 @@ class Voo:
         dtChegada = datetime.strptime(strDtChegada, '%d/%m/%Y %H:%M')
 
         if "id" in json_file:
-            return Voo(idVoo=json_file['id'], lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
+            voo = Voo(idVoo=json_file['id'], lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
                 dataDeChegada=dtChegada, idAeroportoChegada=json_file['destino']['id'], preco=json_file['valor'])
+            print('########### Voo()')
+            voo.printa()
+            return voo
         else:
-            return Voo(lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
+            voo = Voo(lugaresDisponiveis=json_file['passagens'], dataDeSaida=dtSaida, idAeroportoSaida=json_file['partida']['id'],
                 dataDeChegada=dtChegada, idAeroportoChegada=json_file['destino']['id'], preco=json_file['valor'])
+            print('########### Voo()')
+            print('voo: ', voo.getDataDeSaida().strptime(strDtSaida, '%d/%m/%Y %H:%M'))
+            return voo
 
     def to_json(self):
         return self.__str__()

@@ -65,8 +65,10 @@ class ConectaBD:
 
     def addObjectInTable(self, object, Table):
         try:
+            print('######## conectaDB')
+            # print(object)
             row = Table(object)
-            
+            # print(row)
             session = self.getSession()
             session.add(row)
             logging.warning(Table, ' ADICIONADO COM SUCESSO!!')
