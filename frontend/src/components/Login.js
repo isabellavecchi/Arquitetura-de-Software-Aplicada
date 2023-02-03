@@ -36,7 +36,7 @@ const Login = () => {
         if (data){
          login(data.access_token)
 
-         navigate('/adminT')
+         navigate('/adminV')
         }
         else{
             alert('Invalid username or password')

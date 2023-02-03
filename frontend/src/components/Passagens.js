@@ -2,7 +2,7 @@
 // // import Table from 'react-bootstrap/Table';
 // import Button from 'react-bootstrap/Button'
 // import * as ReactBootStrap from 'react-bootstrap';
-// import {voos} from './AdminTickets';
+// import {voos} from './AdminVoos';
 // import Modal from 'react-bootstrap/Modal';
 // import Form from 'react-bootstrap/Form';
 

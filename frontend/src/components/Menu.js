@@ -39,7 +39,7 @@ const LoggedInLinks = () => {
             {/* <Nav.Link as={NavLink} to="/passagens">Comprar passagens</Nav.Link> */}
             {/* <Nav.Link as={NavLink} to="/userP">Minhas viagens</Nav.Link> */}
             <Nav.Link as={NavLink} to="/"> Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/adminT">Administrar Voos</Nav.Link>
+            <Nav.Link as={NavLink} to="/adminV">Administrar Voos</Nav.Link>
             <Nav.Link as={NavLink} to="/adminC">Administrar Passagens</Nav.Link>
             <Nav.Link as={NavLink} to="/adminA">Administrar Aeroportos</Nav.Link>
             <Nav.Link onClick={()=>{logout()}}>Logout</Nav.Link>

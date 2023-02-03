@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  ReactDOM  from 'react-dom'
 import Menu from './components/Menu';
 import Home from './components/Home';
-import AdminTickets from './components/AdminTickets';
+import AdminVoos from './components/AdminVoos';
 import Cadastro from './components/Cadastro';
 import Login from './components/Login';
 // import Passagens from './components/Passagens';
@@ -27,7 +27,7 @@ const App=()=>{
             <Route path="/login" element={<Login />} />
             {/* <Route path="/passagens" element={<Passagens />} /> */}
             <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/adminT" element={<AdminTickets />} />
+            <Route path="/adminV" element={<AdminVoos />} />
             <Route path="/adminP" element={<AdminPassagens />} />
             <Route path="/adminA" element={<AdminAirports />} />
             {/* <Route path="/userP" element={<UserPage />} /> */}

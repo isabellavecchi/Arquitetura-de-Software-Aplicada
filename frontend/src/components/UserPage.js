@@ -7,7 +7,7 @@
 // import * as ReactBootStrap from 'react-bootstrap';
 // import Form from 'react-bootstrap/Form';
 // import {NavLink } from 'react-router-dom';
-// import { voos } from './AdminTickets';
+// import { voos } from './AdminVoos';
 
 <<<<<<< Updated upstream
 // export function RenderVoos (voo, index) {

@@ -25,7 +25,7 @@ const LoggedOutLinks = () => {
        </h3> 
        <h6>Oque você deseja fazer?</h6>
        <div className='d-flex justify-between'>
-       <Button  as={NavLink} to="/adminT" className='m-1' variant="success">Administrar Voos</Button>{' '}
+       <Button  as={NavLink} to="/adminV" className='m-1' variant="success">Administrar Voos</Button>{' '}
        <Button  as={NavLink} to="/adminP" className='m-1' variant="secondary">Administrar Passagens</Button>{' '}
        <Button  as={NavLink} to="/adminA" className='m-1' variant="primary">Administrar Aeroportos</Button>{' '}       
        </div>

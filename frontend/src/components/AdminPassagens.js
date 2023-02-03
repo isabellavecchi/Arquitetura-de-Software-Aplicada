@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 // import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
@@ -6,6 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useForm } from 'react-hook-form';
+import { voos } from './AdminVoos';
+
 
 //mudar o nome de passagenss para passagens
 export const passagens = [
@@ -19,14 +22,46 @@ export const passagens = [
 ]
 
 
-
+export const RenderVoosSelect = (voo, index) => {
+  return(
+  
+  <option value={voo.id}>De {voo.partida} à {voo.destino} no dia: {voo.dia} as {voo.horario} por {voo.valor}   </option>
+  )
+}
 
 
 
 export const RenderPassagens = (Passagens, index) => {
+    // const [lgShow, setLgShow] = useState(false);
   
-  // const [lgShow, setLgShow] = useState(false);
-  return(
+    const {handleSubmit}=useForm()
+ 
+    const deletaPassagem=(data)=>{
+      console.log(Passagens.id)
+      let token=localStorage.getItem('REACT_TOKEN_AUTH_KEY')
+  
+      const requestOptions={
+          method:'DELETE',
+          headers:{
+              'content-type':'application/json',
+              'Authorization':`Bearer ${JSON.parse(token)}`
+          }
+      }
+  
+  
+      fetch(`/passagens/deletar/${Passagens.id}`,requestOptions)
+      .then(res=>res.json())
+      .then(data=>{
+          console.log(data) 
+      
+      })
+      .catch(err=>console.log(err))
+  }
+  
+  
+  
+  
+    return(
    <>
    
     
@@ -37,10 +72,12 @@ export const RenderPassagens = (Passagens, index) => {
       <td>{Passagens.viagem}</td>
       <td> 
         {/* <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button> */}
-        <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
+        <Button className='mx-1' variant="danger" onClick={handleSubmit(deletaPassagem)}><AiOutlineClose /> </Button>
         </td>
     </tr>
-      <Modal
+
+    
+      {/* <Modal
         size="lg"
         // show={lgShow}
         // onHide={() => setLgShow(false)}
@@ -66,9 +103,9 @@ export const RenderPassagens = (Passagens, index) => {
  
     </Form>
           <Modal.Footer>
-          {/* <Button variant="secondary" onClick={() => setLgShow(false)} >
+          <Button variant="secondary" onClick={() => setLgShow(false)} >
             Cancelar
-          </Button> */}
+          </Button>
           <Button variant="primary" >
             Salvar alterações
           </Button>
@@ -76,7 +113,7 @@ export const RenderPassagens = (Passagens, index) => {
       
 
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       </>
 
@@ -87,43 +124,67 @@ export const RenderPassagens = (Passagens, index) => {
 }
 
 
-const AdminTickets=()=>{
+const AdminPassagens=()=>{
   const [search, setSearch] = useState("");
-  const [show, setShow] = useState(false); //modal
+  const [setShow] = useState(false); //modal
   
+  const [show2, setShow2] = useState(false);//modal2
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => setShow2(true);
+
   const handleClose = () => setShow(false);
+
+
+  //Get dos valores da tabela 
+//   const [passagens, setPassagens] = useState([]);
+//   useEffect(
+//     () => {
+//         fetch('/passagens')
+//             .then(res => res.json())
+//             .then(data => {setPassagens(data)})
+//             .then(data=>console.log(data))
+//             .catch(err => console.log(err))
+//     }, []
+// );
+
   
 
-//   const [passagens, setpassagens] = useState({
-//     id:0,
-//     nomePassageiro: "",
-//     cpf: "",
-//     viagem: "",
+
+
+const {register, handleSubmit}=useForm()
+const vendePassagem=(data)=>{
+  //metodo POST para comprar passagem mandar id do voo cpf e nome do passageiro id do voo= passagem
+    const token=localStorage.getItem('REACT_TOKEN_AUTH_KEY');
+    console.log(data)
+  
+    const requestOptions={
+      method:'POST',
+      headers:{
+        'content-type':'application/json',
+        'Authorization':`Bearer ${JSON.parse(token)}`
+      },
+      body:JSON.stringify(data)
+  
+    }
+    fetch('/passagem', requestOptions)
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data)
+  
+        
+    })
+    .catch(err=>console.log(err))
+    // handleClose()
    
-//   });
-
-//   useEffect(() => {
-//     // Usando fetch para pegar os dados do endpoint do flask
-//     fetch("/passagens").then((res) =>
-//         res.json().then((passagens) => {
-//             // seta os valores da api
-//             setpassagens({
-//                 id: passagens.id,
-//                 nomePassageiro: passagens.nomePassageiro,
-//                 cpf: passagens.cpf,
-//                 viagem: passagens.viagem,
-//             });
-//         })
-//     );
-// }, []);
-
+  }
+  
   
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
         <p>Admin</p>
         
         <p>Lista de passagens por nome do Passageiro</p>
-
+        <Button className='m-1' variant="primary" onClick={handleShow2}>Vender Passagem</Button>
          <Form>
           <InputGroup>
           <Form.Control className='m-3' onChange={(e) => setSearch(e.target.value)} placeholder="Busque o aeroporto" />
@@ -131,7 +192,7 @@ return(
           </InputGroup>
          </Form>
 
-        {/* <ReactBootStrap.Table></ReactBootStrap.Table> */}
+       
         <ReactBootStrap.Table striped bordered hover className="text-center">
       <thead>
         <tr>
@@ -152,37 +213,34 @@ return(
      </tbody>
     </ReactBootStrap.Table>
        
-    <Modal show={show} onHide={handleClose}>
+      
+
+
+
+{/* modal de venda de passagem POST */}
+<Modal show={show2} onHide={handleClose2}>
         <Modal.Header closeButton>
-          <Modal.Title>Novo Trajeto</Modal.Title>
+          <Modal.Title>Novo Voo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
         <Form>
-      <Form.Group className="mb-3" controlId="formBasiccpf">
-        <Form.Label>cliente</Form.Label>
-        <Form.Control type="text" placeholder="cliente" />
+      <Form.Group className="mb-3" controlId="passagem">
+      <Form.Label>Partida</Form.Label>
+      <Form.Select aria-label="Default select example" {...register('viagem',{required:true})}>
+       <option>Aeroportos disponiveis</option>
+       {voos.map(RenderVoosSelect)}
+       </Form.Select>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>cpf</Form.Label>
-        <Form.Control type="text" placeholder="cpf" />
+      <Form.Group className="mb-3" controlId="nomePassageiro">
+        <Form.Label>Nome do passageiro</Form.Label>
+        <Form.Control type="text" placeholder="nome do passageiro" {...register('nomePassageiro',{required:true})}/>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Dia</Form.Label>
-        <Form.Control type="date" placeholder="Dia" />
-        
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Horario</Form.Label>
-        <Form.Control type="time" placeholder="Horario" />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Valor</Form.Label>
-        <Form.Control type="number" placeholder="Valor" />
+      <Form.Group className="mb-3" controlId="cpf">
+        <Form.Label>Cpf </Form.Label>
+        <Form.Control type="text" placeholder="Cpf" {...register('cpf',{required:true})}/>
       </Form.Group>
 
  
@@ -193,16 +251,22 @@ return(
           <Button variant="secondary" onClick={handleClose}>
             Fechar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit(vendePassagem)}>
             Salvar alterações
           </Button>
         </Modal.Footer>
       </Modal>
-        
+
+
+
+
+
+
+
     </div>
 
 )
 
 }
 
-export default AdminTickets
+export default AdminPassagens
