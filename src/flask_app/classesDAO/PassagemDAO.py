@@ -11,8 +11,7 @@ class PassagemDAO:
         self.conectaBD = conectaBD
     
     def insertPassagem(self, passagem):
-        self.conectaBD.addObjectInTable(passagem, Booking)
-        return passagem
+        return self.conectaBD.addObjectInTable(passagem, Booking)
     
     def getTbPassagem(self):
         table = self.conectaBD.getTable(Booking)

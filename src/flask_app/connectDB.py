@@ -65,8 +65,10 @@ class ConectaBD:
 
     def addObjectInTable(self, object, Table):
         try:
+            print('######## conectaDB')
+            # print(object)
             row = Table(object)
-            
+            # print(row)
             session = self.getSession()
             session.add(row)
             logging.warning(Table, ' ADICIONADO COM SUCESSO!!')
@@ -131,25 +133,42 @@ class ConectaBD:
                 raise Exception("NENHUMA LINHA ENCONTRADA")
 
         except Exception as e:
-            print(e)
-            ret = {"status": str(e)}
             logging.info('XABUUUUU ... {',e,'}')
+            return None
     
     def updateObjectById(self, Table, object):
-        object = Table(object)
-        session = self.getSession()
-        session.query(Table).filter_by(id=object.id).update({column: getattr(object, column) for column in Table.__table__.columns.keys()})
-        session.commit()
-        return object
+        try:
+
+            object = Table(object)
+            session = self.getSession()
+            session.query(Table).filter_by(id=object.id).update({column: getattr(object, column) for column in Table.__table__.columns.keys()})
+            session.commit()
+            return object
+
+        except Exception as e:
+            logging.info('XABUUUUU ... {',e,'}')
+            return None
     
     def updateTable(self, Table, objectList):
-        for object in objectList:
-            self.updateObjectById(Table, object)
+        try:
+            for object in objectList:
+                self.updateObjectById(Table, object)
+            return objectList
+
+        except Exception as e:
+            logging.info('XABUUUUU ... {',e,'}')
+            return None
     
     def deleteObjectByIDs(self, Table, idArray):
-        session = self.getSession()
-        session.query(Table).filter(Table.id.in_(idArray)).delete()
-        session.commit()
+        try:
+            session = self.getSession()
+            session.query(Table).filter(Table.id.in_(idArray)).delete()
+            session.commit()
+            return True
+
+        except Exception as e:
+            logging.info('XABUUUUU ... {',e,'}')
+            return False
 
     # def getValuesFromQueryString(self, str):
     #     sql = text(str)

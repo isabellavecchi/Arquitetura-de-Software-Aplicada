@@ -11,8 +11,12 @@ class AeroportoDAO:
         self.conectaBD = conectaBD
     
     def insertAeroporto(self, aeroporto):
-        self.conectaBD.addObjectInTable(aeroporto, Airport)
-        return aeroporto
+        # try:
+            return self.conectaBD.addObjectInTable(aeroporto, Airport)
+            
+
+        # except Exception as e:
+        #     return None
     
     def getTbAeroporto(self):
         table = self.conectaBD.getTable(Airport)

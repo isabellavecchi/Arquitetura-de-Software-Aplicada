@@ -46,14 +46,14 @@ class UsuarioDAO:
     ###################### CRUD ######################
 
     def addUsuario(self,user):
-        try:
+        # try:
             usuario = self.conectaBD.addObjectInTable(user, User)
 
             return usuario
 
-        except Exception as e:
-            logging.info(f'XABUUUUU ... {e}')
-            return None
+        # except Exception as e:
+        #     logging.info(f'XABUUUUU ... {e}')
+        #     return None
 
 
     def addListUsuarios(self, users):

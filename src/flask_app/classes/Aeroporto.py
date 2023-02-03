@@ -37,6 +37,8 @@ class Aeroporto:
         print(self.__repr__())
 
     def from_json(json_file):
+        print("aqui no from o filho do jota")
+        print(json_file)
         if "id" in json_file:
             return Aeroporto(idAeroporto=json_file["id"], nome=json_file["nomeAeroporto"], estado=json_file["estado"], cidade=json_file["cidade"])
         else:
