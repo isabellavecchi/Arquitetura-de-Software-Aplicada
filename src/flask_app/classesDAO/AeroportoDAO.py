@@ -32,7 +32,7 @@ class AeroportoDAO:
             logging.info(f'XABUUUUU ... {e}')
     
     def updateAeroportoById(self, aeroporto):
-        self.conectaBD.updateObjectById(Airport, aeroporto)
+        self.conectaBD.updateObject(Airport, aeroporto)
     
     def deleteAeroportoByIDs(self, arrId):
         self.conectaBD.deleteObjectByIDs(Airport, arrId)

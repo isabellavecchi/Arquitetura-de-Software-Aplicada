@@ -38,7 +38,9 @@ class VooDAO:
     def getVooById(self, idVoo):
         try:
             rVoo = self.conectaBD.getObjectById(Flight, idVoo)
-            return Voo(idVoo=rVoo.id, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco)
+            voo = Voo(idVoo=rVoo.id, lugaresDisponiveis=rVoo.qt_lugares_disponiveis, dataDeSaida=rVoo.data_saida, idAeroportoSaida=rVoo.id_aeroporto_saida, dataDeChegada=rVoo.data_chegada, idAeroportoChegada=rVoo.id_aeroporto_chegada, preco=rVoo.preco)
+
+            return voo
 
         except Exception as e:
             print(e)
@@ -46,7 +48,7 @@ class VooDAO:
             logging.info(f'XABUUUUU ... ', e)
     
     def updateVooById(self, voo):
-        self.conectaBD.updateObjectById(Flight, voo)
+         return self.conectaBD.updateObjectById(Flight, voo)
     
     def deleteVooByIDs(self, id):
         self.conectaBD.deleteObjectByIDs(Flight, id)

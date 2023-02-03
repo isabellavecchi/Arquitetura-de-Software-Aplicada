@@ -75,7 +75,8 @@ class ConectaBD:
             return row
 
         except Exception as e:
-            logging.warning(f'XABUUUUU adicionando por input... ', e)
+            logging.warning(f'Usuario nao adicionado... ', e)
+            return None
     
     def addObjectsListInTable(self, objectList, Table):
         try:
@@ -139,6 +140,7 @@ class ConectaBD:
         session = self.getSession()
         session.query(Table).filter_by(id=object.id).update({column: getattr(object, column) for column in Table.__table__.columns.keys()})
         session.commit()
+        return object
     
     def updateTable(self, Table, objectList):
         for object in objectList:

@@ -49,7 +49,7 @@ class Voo:
     
     #usado no momento que dou o print
     def __repr__(self):
-        return 'Voo: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\nPreco: %s\n' % (self.getId(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoSaida(), self.getPreco())
+        return 'Voo: %s\ndataDeSaida: %s\nidAeroportoSaida: %s\ndataDeChegada: %s\nidAeroportoSaida: %s\nPreco: %s\n' % (self.getId(), self.getDataDeSaida(), self.getIdAeroportoSaida(), self.getDataDeChegada(), self.getIdAeroportoChegada(), self.getPreco())
     
     def printa(self):
         print(self.__repr__())

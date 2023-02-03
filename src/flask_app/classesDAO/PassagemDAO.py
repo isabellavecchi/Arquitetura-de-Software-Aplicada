@@ -32,7 +32,7 @@ class PassagemDAO:
             logging.info(f'XABUUUUU ... {e}')
     
     def updatePassagemById(self, passagem):
-        self.conectaBD.updateObjectById(Booking, passagem)
+        self.conectaBD.updateObject(Booking, passagem)
     
     def deletePassagemByIDs(self, arrId):
         self.conectaBD.deleteObjectByIDs(Booking, arrId)
