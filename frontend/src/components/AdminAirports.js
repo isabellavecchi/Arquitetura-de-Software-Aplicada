@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useForm } from 'react-hook-form';
 
 
 export const aeroportos = [
@@ -17,6 +18,34 @@ export const aeroportos = [
 
 export const RenderAeroportos = (aeroporto, index) => {
   // const [lgShow, setLgShow] = useState(false);
+  const {handleSubmit}=useForm()
+ 
+  const deletaAeroporto=(data)=>{
+    console.log(aeroporto.id)
+    let token=localStorage.getItem('REACT_TOKEN_AUTH_KEY')
+
+    const requestOptions={
+        method:'DELETE',
+        headers:{
+            'content-type':'application/json',
+            'Authorization':`Bearer ${JSON.parse(token)}`
+        }
+    }
+
+
+    fetch(`/aeroportos/deletar/${aeroporto.id}`,requestOptions)
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data) 
+    
+    })
+    .catch(err=>console.log(err))
+}
+  
+  
+  
+  
+  
   return(
     <>
       <tr key={index}>
@@ -26,10 +55,13 @@ export const RenderAeroportos = (aeroporto, index) => {
       <td>{aeroporto.estado}</td>
       <td> 
         {/* <Button className='mx-1' variant="info" onClick={() => setLgShow(true)}><FaPen color="white" /></Button> */}
-        <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
+        <Button onClick={handleSubmit(deletaAeroporto)} className='mx-1' variant="danger"><AiOutlineClose /> </Button>
         </td>
     </tr>
-    <Modal
+    
+    {/* modal de update */}
+    
+    {/* <Modal
         size="lg"
         // show={lgShow}
         // onHide={() => setLgShow(false)}
@@ -58,9 +90,9 @@ export const RenderAeroportos = (aeroporto, index) => {
  
     </Form>
           <Modal.Footer>
-          {/* <Button variant="secondary" onClick={() => setLgShow(false)} >
+           <Button variant="secondary" onClick={() => setLgShow(false)} >
             Cancelar
-          </Button> */}
+          </Button> 
           <Button variant="primary" >
             Salvar alterações
           </Button>
@@ -68,7 +100,8 @@ export const RenderAeroportos = (aeroporto, index) => {
       
 
         </Modal.Body>
-      </Modal>
+      </Modal>  
+    */}
 
 </>
   )
@@ -95,7 +128,35 @@ const AdminAirports=()=>{
 //     }, []
 // );
 
-  
+const {register, handleSubmit}=useForm()
+
+const criaAerporto=(data)=>{
+//metodo POST para enviar um voo  
+  const token=localStorage.getItem('REACT_TOKEN_AUTH_KEY');
+  console.log(data)
+
+  const requestOptions={
+    method:'POST',
+    headers:{
+      'content-type':'application/json',
+      'Authorization':`Bearer ${JSON.parse(token)}`
+    },
+    body:JSON.stringify(data)
+
+  }
+  fetch('/aeroportos', requestOptions)
+  .then(res=>res.json())
+  .then(data=>{
+      console.log(data)
+
+      const reload =window.location.reload()
+      reload() 
+  })
+  .catch(err=>console.log(err))
+  // handleClose()
+ 
+}
+
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">
         <p>Admin</p>
@@ -141,14 +202,19 @@ return(
 
         <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Estação</Form.Label>
-        <Form.Control type="text" placeholder="estacao" />
+        <Form.Label>Nome do Aeroporto</Form.Label>
+        <Form.Control type="text" placeholder="nome do Aeroporto" {...register('nomeAeroporto',{required:true})}/>
+      </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Cidade</Form.Label>
+        <Form.Control type="text" placeholder="cidade" {...register('cidade',{required:true})}/>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Estado</Form.Label>
+        <Form.Control type="text" placeholder="estado" {...register('estado',{required:true})}/>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Quantidade de aviões disponíveis</Form.Label>
-        <Form.Control type="text" placeholder="avioes" />
-      </Form.Group>
+  
 
 
  
@@ -159,7 +225,7 @@ return(
           <Button variant="secondary" onClick={handleClose}>
             Fechar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit(criaAerporto)}>
             Salvar alterações
           </Button>
         </Modal.Footer>

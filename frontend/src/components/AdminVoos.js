@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
 import Modal from 'react-bootstrap/Modal';
-import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { aeroportos } from './AdminAirports';
@@ -20,21 +19,6 @@ export const voos = [
   {id:"4",partida:"uberlandia", destino:"bahia", diaPartida:"21/07/2023", horarioPartida:"9:00",diaChegada:"25/11/2023",horarioChegada:"19:00", valor:"650,00" ,passagens:"25"}
 ]
 
-// function handleClick() {
-    
-//   // Send data to the backend via POST
-//   fetch('/voos', {  // Enter your IP address here
-
-//     method: 'POST', 
-//     mode: 'cors', 
-//     body: JSON.stringify(voos), // body data type must match "Content-Type" header
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//   })
-  
-// }
-
 
 
  export const RenderAeroportosSelect = (aeroporto, index) => {
@@ -48,100 +32,156 @@ export const voos = [
    <option value={voo.id}>De {voo.partida} à {voo.destino} no dia: {voo.dia} as {voo.horario} por {voo.valor}   </option>
    )
  }
+ const RenderVoos = (voo, index) => {
+  const [show3, setShow3] = useState(false); //modal
+  const handleClose3 = () => setShow3(false);
+  const handleShow3 = () => setShow3(true);
+  const {register, handleSubmit}=useForm()
 
+  let token=localStorage.getItem('REACT_TOKEN_AUTH_KEY')
+
+  const atualizaVoo=(data)=>{
+      console.log(data)
+
+      
+
+      const requestOptions={
+          method:'PUT',
+          headers:{
+              'content-type':'application/json',
+              'Authorization':`Bearer ${JSON.parse(token)}`
+          },
+          body:JSON.stringify(data)
+      }
+
+      console.log(voo.id)
+      fetch(`/voos/atualiza/${voo.id}`,requestOptions)
+      .then(res=>res.json())
+      .then(data=>{
+          console.log(data)
+
+          const reload =window.location.reload()
+          reload() 
+      })
+      .catch(err=>console.log(err))
+  }
+
+  const deletaVoo=(data)=>{
+    console.log(voo.id)
+    
+
+    const requestOptions={
+        method:'DELETE',
+        headers:{
+            'content-type':'application/json',
+            'Authorization':`Bearer ${JSON.parse(token)}`
+        }
+    }
+
+
+    fetch(`/voos/deletar/${voo.id}`,requestOptions)
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data) 
+    
+    })
+    .catch(err=>console.log(err))
+}
+
+
+return(
+  <>
+    <tr key={index}>
+    <td>{voo.id}</td>
+    <td>{voo.partida}</td>
+    <td>{voo.destino}</td>
+    <td>{voo.diaPartida}</td>
+    <td>{voo.horarioPartida}</td>
+    <td>{voo.diaChegada}</td>
+    <td>{voo.horarioChegada}</td>
+    <td>{voo.valor}</td>
+    <td>{voo.passagens}</td>
+    <td className='d-flex flex-row'> 
+      <Button className='mx-1' variant="info" onClick={handleShow3}><FaPen color="white" /></Button>
+      <Button className='mx-1' variant="danger" onClick={handleSubmit(deletaVoo)}><AiOutlineClose /> </Button>
+    </td>
+  </tr>
+
+  {/* Modal para criação de novo voo */}
+  <Modal show={show3} onHide={handleClose3}>
+      <Modal.Header closeButton>
+        <Modal.Title>Novo Voo</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Form>
+    <Form.Group className="mb-3" controlId="formBasicEmail" >
+      <Form.Label>Partida Atual: ({(voo.partida)})</Form.Label>
+      <Form.Control type="text" placeholder="novo local de partida" {...register('partida',{required:true})}  />
+    </Form.Group>
+
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Destino Atual: ({(voo.destino)})</Form.Label>
+      <Form.Control type="text" placeholder="novo local de destino" {...register('destino',{required:true})} />
+    </Form.Group>
+
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Dia de pardita atual: ({(voo.diaPartida)})</Form.Label>
+      <Form.Control type="date" placeholder="Dia" {...register('diaPartida',{required:true})} />
+      
+    </Form.Group>
+
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Horario de partida Atual: ({(voo.horarioPartida)})</Form.Label>
+      <Form.Control type="time" placeholder="novo Horario de Partida" {...register('horarioPartida',{required:true})} />
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Dia de chegada atual: ({(voo.diaChegada)})</Form.Label>
+      <Form.Control type="date" placeholder="Dia" {...register('diaChegada',{required:true})} />
+      
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Horario de chegada Atual: ({(voo.horarioChegada)})</Form.Label>
+      <Form.Control type="time" placeholder="novo Horario de Chegada" {...register('horarioChegada',{required:true})} />
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Passagens: ({(voo.passagens)})</Form.Label>
+      <Form.Control type="number" placeholder="novo Horario de Chegada" {...register('passagens',{required:true})} />
+    </Form.Group>
+
+    <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Valor da passagem atual: ({(voo.valor)})</Form.Label>
+      <Form.Control type="number" placeholder="novo valor de passagem" />
+    </Form.Group>
+
+
+  </Form>
+        <Modal.Footer>
+        <Button variant="secondary"  onClick={handleClose3} >
+          Cancelar
+        </Button>
+        <Button variant="primary" onClick={handleSubmit(atualizaVoo)} >
+        
+          Salvar alterações
+        </Button>
+      </Modal.Footer>
+    
+
+      </Modal.Body>
+    </Modal>
+  
+  
+  </>
+)
+
+}
 
 
 const AdminVoos=()=>{
 
-  const [show3, setShow3] = useState(false); //modal
-  const handleClose3 = () => setShow3(false);
-  const handleShow3 = () => setShow3(true);
+  
  
   
-  const RenderVoos = (voo, index) => {
 
-  return(
-    <>
-      <tr key={index}>
-      <td>{voo.id}</td>
-      <td>{voo.partida}</td>
-      <td>{voo.destino}</td>
-      <td>{voo.diaPartida}</td>
-      <td>{voo.horarioPartida}</td>
-      <td>{voo.diaChegada}</td>
-      <td>{voo.horarioChegada}</td>
-      <td>{voo.valor}</td>
-      <td>{voo.passagens}</td>
-      <td className='d-flex flex-row'> 
-        <Button className='mx-1' variant="info" onClick={handleShow3}><FaPen color="white" /></Button>
-        <Button className='mx-1' variant="danger"><AiOutlineClose /> </Button>
-      </td>
-    </tr>
-    <Modal show={show3} onHide={handleClose3}>
-        <Modal.Header closeButton>
-          <Modal.Title>Novo Voo</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail" >
-        <Form.Label>Partida Atual: ({(voo.partida)})</Form.Label>
-        <Form.Control type="text" placeholder="novo local de partida"  />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Destino Atual: ({(voo.destino)})</Form.Label>
-        <Form.Control type="text" placeholder="novo local de destino" />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Dia de pardita atual: ({(voo.diaPartida)})</Form.Label>
-        <Form.Control type="date" placeholder="Dia" />
-        
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Horario de partida Atual: ({(voo.horarioPartida)})</Form.Label>
-        <Form.Control type="time" placeholder="novo Horario de Partida" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Dia de chegada atual: ({(voo.diaChegada)})</Form.Label>
-        <Form.Control type="date" placeholder="Dia" />
-        
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Horario de chegada Atual: ({(voo.horarioChegada)})</Form.Label>
-        <Form.Control type="time" placeholder="novo Horario de Chegada" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Passagens: ({(voo.passagens)})</Form.Label>
-        <Form.Control type="number" placeholder="novo Horario de Chegada" />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Valor da passagem atual: ({(voo.valor)})</Form.Label>
-        <Form.Control type="number" placeholder="novo valor de passagem" />
-      </Form.Group>
-
- 
-    </Form>
-          <Modal.Footer>
-          <Button variant="secondary"  onClick={handleClose3} >
-            Cancelar
-          </Button>
-          <Button variant="primary" >
-            Salvar alterações
-          </Button>
-        </Modal.Footer>
-      
-
-        </Modal.Body>
-      </Modal>
-    
-    
-    </>
-  )
-
-}
 
   const [show, setShow] = useState(false); //modal
   const handleClose = () => setShow(false);
@@ -149,7 +189,7 @@ const AdminVoos=()=>{
 
 
 
-  const [search, setSearch] = useState(""); //pesquisa
+  // const [search, setSearch] = useState(""); //pesquisa
   
 //Get dos valores da tabela 
 //   const [voos, setVoos] = useState([]);
@@ -163,7 +203,7 @@ const AdminVoos=()=>{
 //     }, []
 // );
 
-const {register, handleSubmit,formState:{errors}}=useForm()
+const {register, handleSubmit}=useForm()
 
 const criaVoo=(data)=>{
 //metodo POST para enviar um voo  
@@ -204,11 +244,11 @@ return(
         <Button className='m-1' variant="success" onClick={handleShow}>Criar novo voo</Button>
         
         </div>
-         <Form>
+         {/* <Form>
           <InputGroup>
           <Form.Control className='m-3' onChange={(e) => setSearch(e.target.value)} placeholder="Busque o aeroporto" />
           </InputGroup>
-         </Form>
+         </Form> */}
 
 {/* Tabela com a lista de voos */}
     <ReactBootStrap.Table striped bordered hover  className='text-center'>
@@ -227,16 +267,20 @@ return(
         </tr>
       </thead>
       <tbody>
-        {voos.filter((voo)=>{
+        {/* {voos.filter((voo)=>{
           return search.toLowerCase() ===''? voo: voo.partida.toLowerCase()
           .includes(search)
         })
         
-        .map(RenderVoos)}
+        .map(RenderVoos)} */}
+
+        {voos.map(RenderVoos)}
+
+
      </tbody>
     </ReactBootStrap.Table>
 
-{/*Modal para criar novo voo POST */}
+
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Novo Voo</Modal.Title>
