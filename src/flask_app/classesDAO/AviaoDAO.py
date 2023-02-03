@@ -32,7 +32,7 @@ class AviaoDAO:
             logging.info(f'XABUUUUU ... {e}')
     
     def updateAviaoById(self, aviao):
-        self.conectaBD.updateObjectById(Airplane, aviao)
+        self.conectaBD.updateObject(Airplane, aviao)
     
     def deleteAviaoByIDs(self, id):
         self.conectaBD.deleteObjectByIDs(Airplane, id)

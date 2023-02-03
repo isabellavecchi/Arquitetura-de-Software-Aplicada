@@ -47,12 +47,13 @@ class UsuarioDAO:
 
     def addUsuario(self,user):
         try:
-            self.conectaBD.addObjectInTable(user, User)
+            usuario = self.conectaBD.addObjectInTable(user, User)
 
-            return user
+            return usuario
 
         except Exception as e:
             logging.info(f'XABUUUUU ... {e}')
+            return None
 
 
     def addListUsuarios(self, users):
@@ -82,7 +83,7 @@ class UsuarioDAO:
     
     
     def updateUserById(self, usuario):
-        self.conectaBD.updateObjectById(User, usuario)
+        self.conectaBD.updateObject(User, usuario)
         return usuario
     
     def deleteUsersByIDs(self, idArray):

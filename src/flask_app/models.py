@@ -128,7 +128,7 @@ class Flight(Base):
         self.data_saida = voo.getDataDeSaida()
         self.id_aeroporto_saida = voo.getIdAeroportoSaida()
         self.data_chegada = voo.getDataDeChegada()
-        self.id_aeroporto_chegada = voo.getIdAeroportoSaida()
+        self.id_aeroporto_chegada = voo.getIdAeroportoChegada()
         self.preco = voo.getPreco()
 
     # def get_arrival_airport(self):
