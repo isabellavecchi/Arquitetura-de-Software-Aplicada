@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 // import { FaPen } from "react-icons/fa";
 import {AiOutlineClose} from "react-icons/ai";
@@ -83,28 +83,18 @@ const AdminAirports=()=>{
 
   const [search, setSearch] = useState("")
 
-  // const [aeroportos, setaeroportos] = useState({
-  //   id:0,
-  //   nomeAeroporto: "",
-  //   cidade: "",
-  //   estado: "",
-   
-  // });
-  
-  // useEffect(() => {
-  //   // Usando fetch para pegar os dados do endpoint do flask
-  //   fetch("/aeroportos").then((res) =>
-  //       res.json().then((aeroportos) => {
-  //           // seta os valores da api
-  //           setaeroportos({
-  //               id: aeroportos.id,
-  //               nomeAeroporto: aeroportos.nomeAeroporto,
-  //               cpf: aeroportos.cpf,
-  //               viagem: aeroportos.viagem,
-  //           });
-  //       })
-  //   );
-  // }, []);
+//Get dos valores da tabela 
+//   const [aeroportos, setAeroportos] = useState([]);
+//   useEffect(
+//     () => {
+//         fetch('/aeroportos')
+//             .then(res => res.json())
+//             .then(data => {setAeroportos(data)})
+//             .then(data=>console.log(data))
+//             .catch(err => console.log(err))
+//     }, []
+// );
+
   
 return(
     <div className="container container  d-flex align-items-center flex-column mt-5">

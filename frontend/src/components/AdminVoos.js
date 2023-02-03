@@ -7,6 +7,7 @@ import { InputGroup } from 'react-bootstrap';
 import * as ReactBootStrap from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { aeroportos } from './AdminAirports';
+import { useForm } from 'react-hook-form';
 
 
 
@@ -50,12 +51,12 @@ export const voos = [
 
 
 
-const AdminTickets=()=>{
+const AdminVoos=()=>{
 
   const [show3, setShow3] = useState(false); //modal
   const handleClose3 = () => setShow3(false);
   const handleShow3 = () => setShow3(true);
-  const [voo,setVoos] = useState()
+ 
   
   const RenderVoos = (voo, index) => {
 
@@ -146,55 +147,53 @@ const AdminTickets=()=>{
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [show2, setShow2] = useState(false);//modal2
-  const handleClose2 = () => setShow2(false);
-  const handleShow2 = () => setShow2(true);
+
 
   const [search, setSearch] = useState(""); //pesquisa
   
-  
-  // const [voos, setvoos] = useState({
-  //   id:0,
-  //   partida: "",
-  //   destino: "",
-  //   diaPartida: "",
-  //   horarioPartida:"",
-  //   diaChegada:"",
-  //   horarioChegada:"",
-  //   valor:"",
-  //   passagens:"",
-   
-  // });
-  
-  // useEffect(() => {
-  //   // Usando fetch para pegar os dados do endpoint do flask
-  //   fetch("/voos").then((res) =>
-  //       res.json().then((voos) => {
-  //           // seta os valores da api
-  //           setvoos({
-  //               id: voos.id,
-  //               partida: voos.partida,
-  //               destino: voos.destino,
-  //               diaPartida: voos.diaPartida,
-  //               horarioPartida: voos.horarioPartida,
-  //               diaChegada: voos.diaChegada,
-  //               horarioChegada: voos.horarioChegada,
-  //               valor: voos.valor,
-  //               passagens: voos.passagens
-  //           });
-  //       })
-  //   );
-  // }, []);
-  
+//Get dos valores da tabela 
+//   const [voos, setVoos] = useState([]);
+//   useEffect(
+//     () => {
+//         fetch('/voos')
+//             .then(res => res.json())
+//             .then(data => {setVoos(data)})
+//             .then(data=>console.log(data))
+//             .catch(err => console.log(err))
+//     }, []
+// );
 
+const {register, handleSubmit,formState:{errors}}=useForm()
+
+const criaVoo=(data)=>{
+//metodo POST para enviar um voo  
+  const token=localStorage.getItem('REACT_TOKEN_AUTH_KEY');
+  console.log(data)
+
+  const requestOptions={
+    method:'POST',
+    headers:{
+      'content-type':'application/json',
+      'Authorization':`Bearer ${JSON.parse(token)}`
+    },
+    body:JSON.stringify(data)
+
+  }
+  fetch('/voos', requestOptions)
+  .then(res=>res.json())
+  .then(data=>{
+      console.log(data)
+
+      const reload =window.location.reload()
+      reload() 
+  })
+  .catch(err=>console.log(err))
+  // handleClose()
+ 
+}
 
   
 return(
-
-
-
-
-
 
 
     <div className="container container  d-flex align-items-center flex-column mt-5">
@@ -203,7 +202,7 @@ return(
         <p>Lista de aeroportos com passagens disponíveis</p>
         <div className='m-2'>
         <Button className='m-1' variant="success" onClick={handleShow}>Criar novo voo</Button>
-        <Button className='m-1' variant="primary" onClick={handleShow2}>Vender Passagem</Button>
+        
         </div>
          <Form>
           <InputGroup>
@@ -211,8 +210,8 @@ return(
           </InputGroup>
          </Form>
 
-        {/* <ReactBootStrap.Table></ReactBootStrap.Table> */}
-        <ReactBootStrap.Table striped bordered hover  className='text-center'>
+{/* Tabela com a lista de voos */}
+    <ReactBootStrap.Table striped bordered hover  className='text-center'>
       <thead>
         <tr >
           <th>id</th>
@@ -236,7 +235,8 @@ return(
         .map(RenderVoos)}
      </tbody>
     </ReactBootStrap.Table>
-       
+
+{/*Modal para criar novo voo POST */}
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Novo Voo</Modal.Title>
@@ -244,46 +244,46 @@ return(
         <Modal.Body>
 
         <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" controlId="partida">
       <Form.Label>Partida</Form.Label>
-      <Form.Select aria-label="Default select example">
+      <Form.Select aria-label="Default select example" {...register('partida',{required:true})}>
        <option>Aeroportos disponiveis</option>
        {aeroportos.map(RenderAeroportosSelect)}
        </Form.Select>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="destino">
       <Form.Label>Destino</Form.Label>
-      <Form.Select aria-label="Default select example">
+      <Form.Select aria-label="Default select example"  {...register('destino',{required:true})}>
        <option>Aeroportos disponiveis</option>
        {aeroportos.map(RenderAeroportosSelect)}
        </Form.Select>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="diaPartida">
         <Form.Label>Dia da Partida</Form.Label>
-        <Form.Control type="date" placeholder="Dia da Partida" />
+        <Form.Control type="date" placeholder="Dia da Partida"  {...register('diaPartida',{required:true})} />
         
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="horarioPartida">
         <Form.Label>Horario da Partida</Form.Label>
-        <Form.Control type="time" placeholder="Horario da Partida" />
+        <Form.Control type="time" placeholder="Horario da Partida"  {...register('horarioPartida',{required:true})}/>
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="diaChegada">
         <Form.Label>Dia da Chegada</Form.Label>
-        <Form.Control type="date" placeholder="Dia da Chegada" />
+        <Form.Control type="date" placeholder="Dia da Chegada"  {...register('diaChegada',{required:true})} />
         
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="horarioChegada">
         <Form.Label>Horario da Chegada</Form.Label>
-        <Form.Control type="time" placeholder="Horario da Chegada" />
+        <Form.Control type="time" placeholder="Horario da Chegada"  {...register('horarioChegada',{required:true})} />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="valor">
         <Form.Label>Valor</Form.Label>
-        <Form.Control type="number" placeholder="Valor" />
+        <Form.Control type="number" placeholder="Valor" {...register('valor',{required:true})}/>
       </Form.Group>
 
  
@@ -294,45 +294,23 @@ return(
           <Button variant="secondary" onClick={handleClose}>
             Fechar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit(criaVoo)}>
             Salvar alterações
           </Button>
         </Modal.Footer>
       </Modal>
 
 
-      {/* modal de venda de passagem */}
-      <Modal show={show2} onHide={handleClose2}>
-         <Modal.Header closeButton>
-           <Modal.Title>Comprar passagem</Modal.Title>
-         </Modal.Header>
-         <Modal.Body>Selecione qual passagem deseja comprar
-         <Form.Select aria-label="Default select example">/       <option>Vôos disponiveis</option>
-       {voos.map(RenderVoosSelect)}
-        </Form.Select>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Nome do passageiro</Form.Label>
-        <Form.Control type="text" placeholder="cliente" />
-      </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Cpf</Form.Label>
-        <Form.Control type="text" placeholder="email" />
-      </Form.Group>
 
-         </Modal.Body>
-         <Modal.Footer>
-           <Button variant="primary" >
-             Vender passagem
-           </Button>
-         </Modal.Footer>
-      </Modal>
-   
+
+
+
         
     </div>
 )
 
 }
 
-export default AdminTickets
+export default AdminVoos
