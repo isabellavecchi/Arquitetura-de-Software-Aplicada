@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Estudantes</title>
+</head>
+<body>
+    <h1><b>LISTAR ESTUDANTES</b></h1>
+    <form action="http://127.0.0.1:5000/listar" method="post">
+        <fieldset>
+            <legend>Ordenar Estudantes por:</legend>
+        
+            <div>
+              <input type="radio" id="rbrbMatricula" name="rbOrder" value="rbMatricula"
+                     checked>
+              <label for="rbMatricula">Matrícula</label>
+            </div>
+        
+            <div>
+              <input type="radio" id="rbNome" name="rbOrder" value="rbNome">
+              <label for="rbNome">Nome</label>
+            </div>
+        </fieldset>
+
+
+        <p>
+            <label for="nome">Pesquisar por Nome:</label>
+            <input type="text" name="nome" id="nome">
+        </p>
+
+
+        <p>
+            <button type="submit">Enviar</button>
+        </p>
+        <br>
+        <!-- <label name="statusBusca" id="statusBusca">{{statusBusca}}</label> -->
+        <br>
+        <!-- Baixar pdf -->
+    </form>
+    
+    <form action="http://127.0.0.1:5000/" method="post">
+        <button type="menu">Voltar para o menu</button>
+    </form>
+</body>
+</html>

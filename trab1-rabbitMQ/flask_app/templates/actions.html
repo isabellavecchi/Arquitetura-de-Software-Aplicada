@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca Estudantes</title>
+</head>
+<body>
+    <h1><b>UPDATE/DELETE ESTUDANTE</b></h1>
+    <form action="http://127.0.0.1:5000/actions" method="post">
+        <p>Busque o Estudante a ser atualizado/deletado:</p>
+        <p>Matrícula: {{matricula}}</p>
+        <p>
+            <p>
+                <input type="text" name="nome" id="nome" placeholder="Nome Completo" required>
+            </p>
+            <p>
+                <input type="text" name="cpf" id="cpf" placeholder="CPF (apenas números)" required>
+            </p>
+            <p>
+                <input type="text" name="endereco" id="endereco" placeholder="Endereço" required>
+            </p>
+            <p>
+                <input type="text" name="email" id="email" placeholder="email@universidade.com" required>
+            </p>
+
+            <button type="submit">Atualizar</button>
+        </p>
+    </form>
+    <form action="http://127.0.0.1:5000/delete" method="post">
+        <button type="submit">Deletar</button>
+    </form>
+</body>
+</html>
