@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Estudante</title>
+</head>
+<body>
+    <h1><b>CADASTRO DE ESTUDANTES</b></h1>
+    <form action="http://127.0.0.1:5000/cadastro" method="post">
+        <p>
+            <input type="text" name="nome" id="nome" placeholder="Nome Completo" required>
+        </p>
+        <p>
+            <input type="text" name="cpf" id="cpf" placeholder="CPF (apenas números)" required>
+        </p>
+        <p>
+            <input type="text" name="endereco" id="endereco" placeholder="Endereço" required>
+        </p>
+        <p>
+            <input type="text" name="email" id="email" placeholder="email@universidade.com" required>
+        </p>
+        <p>
+            <button type="submit">Enviar</button>
+        </p>
+        <br>
+        <!-- <label name="statusCadastro" id="statusCadastro">{{statusCadastro}}</label> -->
+        <br>
+        <!-- inserir por pdf -->
+    </form>
+
+    <form action="http://127.0.0.1:5000/" method="post">
+        <button type="menu">Voltar para o menu</button>
+    </form>
+
+</body>
+</html>
